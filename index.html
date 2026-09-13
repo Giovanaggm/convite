@@ -40,7 +40,6 @@
   @keyframes twinkle{ 0%,100%{opacity:.2; transform:scale(.9);} 50%{opacity:.75; transform:scale(1.05);} }
   @media (prefers-reduced-motion: reduce){ .sky-star{ animation:none; } }
 
-  /* ---------- shared card shell ---------- */
   .card{
     position:relative;
     background:linear-gradient(160deg, var(--navy-soft), var(--navy-mid) 60%, var(--navy-deep));
@@ -56,29 +55,12 @@
     pointer-events:none;
   }
 
-  /* ---------- reusable decorative art ---------- */
   .deco-star{ position:absolute; }
-  .charm-btn{
-    width:26px;height:26px;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #ee94b3, var(--pink) 70%);
-    box-shadow: inset 0 -2px 4px rgba(0,0,0,.3), 0 2px 5px rgba(0,0,0,.35);
-    position:absolute;
-  }
-  .charm-btn::before{
-    content:''; position:absolute; inset:0; margin:auto; width:12px;height:12px;
-    background-image:
-      radial-gradient(circle at 30% 30%, var(--navy-deep) 1.6px, transparent 1.7px),
-      radial-gradient(circle at 70% 30%, var(--navy-deep) 1.6px, transparent 1.7px),
-      radial-gradient(circle at 30% 70%, var(--navy-deep) 1.6px, transparent 1.7px),
-      radial-gradient(circle at 70% 70%, var(--navy-deep) 1.6px, transparent 1.7px);
-  }
 
-  /* ---------- SCREENS ---------- */
   .screen{ display:none; animation: riseIn .55s ease both; }
   .screen.show{ display:block; }
   @keyframes riseIn{ from{ opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
 
-  /* ---------- SCREEN 1: envelope fechado ---------- */
   #screen-closed .envelope-wrap{
     position:relative;
     aspect-ratio: 4/3.1;
@@ -132,7 +114,6 @@
     color:var(--cream); opacity:.85; margin-top:16px;
   }
 
-  /* ---------- SCREEN 2: carta ---------- */
   #screen-letter .card{ padding:28px 22px 26px; text-align:center; }
   .back-link{
     background:none; border:none; color:var(--periwinkle);
@@ -174,7 +155,6 @@
   .action-btn.uber{ background:linear-gradient(160deg, var(--btn-uber), var(--btn-uber-dark)); }
   .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
 
-  /* ---------- MODAL (RSVP) ---------- */
   .modal-overlay{
     position:fixed; inset:0; background:rgba(4,6,16,.75);
     display:none; align-items:center; justify-content:center; padding:18px; z-index:50;
@@ -206,7 +186,6 @@
   .thanks{ text-align:center; padding:8px 4px 4px; }
   .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); }
 
-  /* ---------- PAINEL DO ANFITRIÃO ---------- */
   .host-toggle{
     position:fixed; top:10px; right:10px; z-index:40;
     background:rgba(18,25,52,.9); color:var(--periwinkle);
@@ -236,81 +215,6 @@
     h1.name{ font-size:2.5rem; }
   }
 </style>
-
-<!-- MÓDULO INICIALIZADOR DO FIREBASE -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDXGY9mj_Bbk3laXh80trJiAG2AfinEr4k",
-    authDomain: "convite-catarina.firebaseapp.com",
-    databaseURL: "https://convite-catarina-default-rtdb.firebaseio.com",
-    projectId: "convite-catarina",
-    storageBucket: "convite-catarina.firebasestorage.app",
-    messagingSenderId: "673530294395",
-    appId: "1:673530294395:web:c9e65798d7615330e232de"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // Expor API global do Realtime Database
-  window.storage = {
-    async set(key, value) {
-      try {
-        await set(ref(db, key), value);
-        return true;
-      } catch (err) {
-        console.error('Erro ao salvar:', err);
-        return false;
-      }
-    },
-    async get(key) {
-      try {
-        const snapshot = await get(child(ref(db), key));
-        if (snapshot.exists()) {
-          return { value: snapshot.val() };
-        }
-        return null;
-      } catch (err) {
-        console.error('Erro ao buscar:', err);
-        return null;
-      }
-    },
-    async list(prefix) {
-      try {
-        const snapshot = await get(ref(db));
-        if (!snapshot.exists()) return { keys: [] };
-        const data = snapshot.val();
-        const keys = Object.keys(data).filter(k => k.startsWith(prefix)).sort();
-        return { keys };
-      } catch (err) {
-        console.error('Erro ao listar:', err);
-        return { keys: [] };
-      }
-    },
-    async clearAllRSVP() {
-      try {
-        const listResult = await this.list('rsvp_');
-        const keys = listResult.keys || [];
-        for (const k of keys) {
-          await remove(ref(db, k));
-        }
-        return true;
-      } catch (err) {
-        console.error('Erro ao limpar banco:', err);
-        return false;
-      }
-    }
-  };
-
-  // Checagem se é anfitrião via query param ?anfitriao=1
-  const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
-  if(isHost) {
-    document.getElementById('hostToggleBtn').style.display = 'block';
-  }
-</script>
 </head>
 <body>
 
@@ -373,7 +277,7 @@
 
 </div>
 
-<!-- BOTÃO DO ANFITRIÃO -->
+<!-- BOTÃO FLUTUANTE DO ANFITRIÃO -->
 <button class="host-toggle" id="hostToggleBtn" style="display:none" onclick="toggleHostPanel()">📋 anfitriã</button>
 
 <!-- RSVP MODAL -->
@@ -404,10 +308,78 @@
   </div>
 </div>
 
+<!-- SDK DO FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXGY9mj_Bbk3laXh80trJiAG2AfinEr4k",
+    authDomain: "convite-catarina.firebaseapp.com",
+    databaseURL: "https://convite-catarina-default-rtdb.firebaseio.com",
+    projectId: "convite-catarina",
+    storageBucket: "convite-catarina.firebasestorage.app",
+    messagingSenderId: "673530294395",
+    appId: "1:673530294395:web:c9e65798d7615330e232de"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.storage = {
+    async set(key, value) {
+      try {
+        await set(ref(db, key), value);
+        return true;
+      } catch (err) {
+        console.error('Erro no set:', err);
+        return false;
+      }
+    },
+    async get(key) {
+      try {
+        const snapshot = await get(child(ref(db), key));
+        if (snapshot.exists()) return { value: snapshot.val() };
+        return null;
+      } catch (err) {
+        console.error('Erro no get:', err);
+        return null;
+      }
+    },
+    async list(prefix) {
+      try {
+        const snapshot = await get(ref(db));
+        if (!snapshot.exists()) return { keys: [] };
+        const data = snapshot.val();
+        const keys = Object.keys(data).filter(k => k.startsWith(prefix)).sort();
+        return { keys };
+      } catch (err) {
+        console.error('Erro no list:', err);
+        return { keys: [] };
+      }
+    },
+    async clearAllRSVP() {
+      try {
+        const listResult = await this.list('rsvp_');
+        const keys = listResult.keys || [];
+        for (const k of keys) {
+          await remove(ref(db, k));
+        }
+        return true;
+      } catch (err) {
+        console.error('Erro no clearAllRSVP:', err);
+        return false;
+      }
+    }
+  };
+
+  const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
+  if(isHost) {
+    document.getElementById('hostToggleBtn').style.display = 'block';
+  }
+</script>
+
 <script>
-/* =========================================================
-   CONFIGURAÇÃO DO CONVITE
-========================================================= */
 const CONFIG = {
   guestOfHonor: "Catarina",
   age: 12,
@@ -426,9 +398,6 @@ const uberUrl = "https://m.uber.com/ul/?action=setPickup&pickup=my_location&drop
   + encodeURIComponent(CONFIG.address);
 document.getElementById('uberBtn').href = uberUrl;
 
-/* =========================================================
-   NAVEGAÇÃO
-========================================================= */
 const screenClosed = document.getElementById('screen-closed');
 const screenLetter = document.getElementById('screen-letter');
 const envelopeWrapEl = document.getElementById('envelopeWrap');
@@ -462,9 +431,6 @@ function openEnvelope(){
   }, 350 + 950);
 }
 
-/* =========================================================
-   MODAL RSVP
-========================================================= */
 const rsvpOverlay = document.getElementById('rsvpOverlay');
 function openRsvp(){ rsvpOverlay.classList.add('show'); }
 function closeRsvp(){ 
@@ -523,7 +489,7 @@ async function submitRsvp(){
       rsvpBtn.classList.add('confirmed');
       rsvpBtn.disabled = true;
     } else {
-      throw new Error('Falha no armazenamento');
+      throw new Error('Falha ao salvar');
     }
   } catch(err) {
     msg.textContent = 'Não conseguimos salvar agora. Tente novamente!';
@@ -535,9 +501,6 @@ async function submitRsvp(){
   isSubmitting = false;
 }
 
-/* =========================================================
-   FUNÇÕES DO ANFITRIÃO
-========================================================= */
 function toggleHostPanel(){
   const panel = document.getElementById('hostPanel');
   panel.classList.toggle('show');
@@ -578,24 +541,28 @@ async function loadHostList(){
       return '<li><span class="who">' + escapeHtml(e.name) + '</span>' + comps + '</li>';
     }).join('');
   }catch(err){
-    console.error('Erro ao carregar anfitrião:', err);
+    console.error('Erro ao carregar lista:', err);
     totalEl.textContent = 'Não foi possível carregar a lista.';
   }
 }
 
 async function clearHostList(){
-  if(!confirm("Tem certeza que deseja apagar TODAS as confirmações? Esta ação não pode ser desfeita.")) return;
+  if(!confirm("Tem certeza que deseja apagar TODAS as confirmações da lista?")) return;
 
   const totalEl = document.getElementById('hostTotal');
   totalEl.textContent = 'apagando...';
 
-  const ok = await window.storage.clearAllRSVP();
-  if(ok){
-    document.getElementById('hostList').innerHTML = '';
-    totalEl.textContent = 'Lista limpa com sucesso.';
-    alert("Todas as confirmações foram apagadas!");
-  } else {
-    alert("Erro ao apagar confirmações. Tente novamente.");
+  try {
+    const ok = await window.storage.clearAllRSVP();
+    if(ok){
+      document.getElementById('hostList').innerHTML = '';
+      totalEl.textContent = 'Ninguém confirmou ainda.';
+      alert("Todas as confirmações foram apagadas!");
+    } else {
+      throw new Error('Erro ao apagar');
+    }
+  } catch(err) {
+    alert("Erro ao apagar. Verifique se as Regras de Segurança do Firebase permitem gravação.");
     loadHostList();
   }
 }
@@ -606,9 +573,6 @@ function escapeHtml(str){
   return div.innerHTML;
 }
 
-/* =========================================================
-   ESTRELAS DE FUNDO
-========================================================= */
 (function addStars(){
   const positions = [
     {t:'6%', l:'10%', s:12, d:0}, {t:'14%', l:'82%', s:9, d:.6},
