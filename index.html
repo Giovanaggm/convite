@@ -417,9 +417,6 @@ const CONFIG = {
   age: 12,
   whenText: "sábado, 3 de outubro · 17h",
   address: "Avenida Buritis, Chácara 13, Condomínio Venturis Ventis, casa 22, Ponte Alta Norte, Gama, DF",
-  // Endereço formatado do jeito que o Google Maps reconhece melhor (o nome do condomínio +
-  // "casa 22" junto costuma confundir o buscador do Maps, então aqui uso o formato oficial do
-  // logradouro + CEP, que aponta certinho para o condomínio; o CEP é 72457-993).
   mapsQuery: "Condomínio Venturis Ventis, Chácara 13, Ponte Alta Norte, Gama - DF, 72457-993",
 };
 
@@ -435,7 +432,6 @@ document.getElementById('uberBtn').href = uberUrl;
 
 /* =========================================================
    NAVEGAÇÃO ENTRE TELAS
-   1) envelope fechado -> 2) carta (o fecho "salta" e a aba abre revelando tudo)
 ========================================================= */
 const screenClosed = document.getElementById('screen-closed');
 const screenLetter = document.getElementById('screen-letter');
@@ -455,7 +451,6 @@ function goToClosed(){
   tapHintOuterEl.textContent = 'toque para abrir ✧';
 }
 
-// sequência: 1) o fecho de botão "salta" fora, 2) a aba do envelope abre, 3) revela a carta
 let envelopeBusy = false;
 function openEnvelope(){
   if(envelopeBusy) return;
@@ -478,7 +473,6 @@ const rsvpOverlay = document.getElementById('rsvpOverlay');
 function openRsvp(){ rsvpOverlay.classList.add('show'); }
 function closeRsvp(){ 
   rsvpOverlay.classList.remove('show');
-  // Resetar o formulário quando fechar
   document.getElementById('rsvpFormWrap').style.display = 'block';
   document.getElementById('rsvpThanks').style.display = 'none';
   document.getElementById('guestName').value = '';
@@ -521,16 +515,15 @@ async function submitRsvp(){
     total: 1 + companions.length,
     timestamp: new Date().toISOString()
   };
-  const key = 'rsvp:' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+  const key = 'rsvp_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 
-  // Retry logic: tenta até 3 vezes
   let attempts = 0;
   const maxAttempts = 3;
   let success = false;
 
   while(attempts < maxAttempts && !success){
     try{
-      const result = await window.storage.set(key, JSON.stringify(entry), true);
+      const result = await window.storage.set(key, entry, true);
       if(result){
         success = true;
         document.getElementById('rsvpFormWrap').style.display = 'none';
@@ -542,7 +535,6 @@ async function submitRsvp(){
       } else {
         attempts++;
         if(attempts < maxAttempts){
-          // Espera um pouco antes de tentar de novo
           msg.textContent = `tentando novamente... (${attempts}/${maxAttempts})`;
           msg.className = 'form-msg loading';
           await new Promise(resolve => setTimeout(resolve, 1000));
@@ -587,7 +579,7 @@ async function loadHostList(){
   listEl.innerHTML = '';
   totalEl.textContent = 'carregando…';
   try{
-    const listResult = await window.storage.list('rsvp:', true);
+    const listResult = await window.storage.list('rsvp_', true);
     const keys = (listResult && listResult.keys) ? listResult.keys : [];
     if(keys.length === 0){
       totalEl.textContent = 'Ninguém confirmou ainda.';
@@ -599,7 +591,7 @@ async function loadHostList(){
       try{
         const r = await window.storage.get(k, true);
         if(r && r.value){
-          const parsed = JSON.parse(r.value);
+          const parsed = (typeof r.value === 'string') ? JSON.parse(r.value) : r.value;
           entries.push(parsed);
           totalGuests += parsed.total || 1;
         }
@@ -626,7 +618,7 @@ function escapeHtml(str){
 }
 
 /* =========================================================
-   Floating background stars (decorative, não intrusivo)
+   Floating background stars
 ========================================================= */
 (function addStars(){
   const positions = [
