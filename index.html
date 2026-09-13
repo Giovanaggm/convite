@@ -7,21 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Pirata+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
-<!-- Botão e painel do anfitrião -->
-  <button id="hostToggleBtn" style="display:none;" onclick="toggleHostPanel()">
-    Ver confirmações
-  </button>
-  <button id="clearBtn" onclick="clearHostList()">Limpar lista</button>
-  <div id="hostPanel">
-    <div id="hostTotal"></div>
-    <ul id="hostList"></ul>
-  </div>
-
-
 <style>
   :root{
     --navy-deep:#0d1226;
-  --navy-mid:#171f3f;
+    --navy-mid:#171f3f;
     --navy-soft:#212c56;
     --yellow:#ffd447;
     --cream:#f2ede1;
@@ -67,7 +56,7 @@
     pointer-events:none;
   }
 
-  /* ---------- reusable decorative art (original, não reproduz ilustrações do filme) ---------- */
+  /* ---------- reusable decorative art ---------- */
   .deco-star{ position:absolute; }
   .charm-btn{
     width:26px;height:26px;border-radius:50%;
@@ -83,22 +72,9 @@
       radial-gradient(circle at 30% 70%, var(--navy-deep) 1.6px, transparent 1.7px),
       radial-gradient(circle at 70% 70%, var(--navy-deep) 1.6px, transparent 1.7px);
   }
-  .moon-window{
-    position:absolute; width:66px; height:66px; border-radius:50%;
-    background:radial-gradient(circle at 35% 35%, #2c3f78, #101a38 75%);
-    border:2px solid rgba(242,237,225,.5);
-    overflow:hidden;
-  }
-  .moon-window svg{ width:100%; height:100%; }
-  .cat-silhouette{ position:absolute; }
 
-  /* =========================================================
-     SCREENS (fade/slide between states)
-  ========================================================= */
-  .screen{
-    display:none;
-    animation: riseIn .55s ease both;
-  }
+  /* ---------- SCREENS ---------- */
+  .screen{ display:none; animation: riseIn .55s ease both; }
   .screen.show{ display:block; }
   @keyframes riseIn{ from{ opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
 
@@ -128,7 +104,6 @@
   #screen-closed .deco-star.star-c{ bottom:16px; left:22px; width:11px; color:var(--periwinkle); }
   #screen-closed .deco-star.star-d{ bottom:22px; right:18px; width:9px; }
 
-  /* fecho de botão no bico do envelope */
   .clasp-btn{
     position:absolute; top:calc(58% - 17px); left:50%;
     width:34px; height:34px; border-radius:50%;
@@ -157,7 +132,7 @@
     color:var(--cream); opacity:.85; margin-top:16px;
   }
 
-  /* ---------- SCREEN 3: carta ---------- */
+  /* ---------- SCREEN 2: carta ---------- */
   #screen-letter .card{ padding:28px 22px 26px; text-align:center; }
   .back-link{
     background:none; border:none; color:var(--periwinkle);
@@ -199,9 +174,7 @@
   .action-btn.uber{ background:linear-gradient(160deg, var(--btn-uber), var(--btn-uber-dark)); }
   .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
 
-  /* =========================================================
-     MODAL (RSVP)
-  ========================================================= */
+  /* ---------- MODAL (RSVP) ---------- */
   .modal-overlay{
     position:fixed; inset:0; background:rgba(4,6,16,.75);
     display:none; align-items:center; justify-content:center; padding:18px; z-index:50;
@@ -233,6 +206,7 @@
   .thanks{ text-align:center; padding:8px 4px 4px; }
   .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); }
 
+  /* ---------- PAINEL DO ANFITRIÃO ---------- */
   .host-toggle{
     position:fixed; top:10px; right:10px; z-index:40;
     background:rgba(18,25,52,.9); color:var(--periwinkle);
@@ -250,24 +224,24 @@
   .host-list li{ background:rgba(242,237,225,.06); border-radius:10px; padding:8px 10px; font-size:.83rem; }
   .host-list li .who{ font-weight:700; color:var(--yellow); }
   .host-list li .comps{ color:#cfd6ec; font-size:.76rem; }
-  .host-refresh{
-    margin-top:10px; background:none; border:1px solid rgba(139,155,209,.4);
-    color:var(--periwinkle); border-radius:999px; padding:8px 14px; font-size:.78rem; cursor:pointer;
+  .host-btn-group { display: flex; gap: 8px; margin-top: 10px; }
+  .host-refresh, .host-clear{
+    flex: 1; background:none; border:1px solid rgba(139,155,209,.4);
+    color:var(--periwinkle); border-radius:999px; padding:8px 10px; font-size:.78rem; cursor:pointer;
   }
+  .host-clear { border-color: rgba(241,138,138,.4); color: #f18a8a; }
 
   @media (max-width: 340px){
     #app{ max-width: 92vw; }
     h1.name{ font-size:2.5rem; }
-    .hero-name{ font-size:2.2rem; }
   }
 </style>
-</head>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-  // Your web app's Firebase configuration (projeto: convite-catarina)
+<!-- MÓDULO INICIALIZADOR DO FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyDXGY9mj_Bbk3laXh80trJiAG2AfinEr4k",
     authDomain: "convite-catarina.firebaseapp.com",
@@ -278,23 +252,21 @@
     appId: "1:673530294395:web:c9e65798d7615330e232de"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // Expose storage API globally
+  // Expor API global do Realtime Database
   window.storage = {
-    async set(key, value, isPublic = false) {
+    async set(key, value) {
       try {
         await set(ref(db, key), value);
-        console.log('✅ Dados salvos em:', key);
         return true;
       } catch (err) {
-        console.error('❌ Storage set error:', err);
+        console.error('Erro ao salvar:', err);
         return false;
       }
     },
-    async get(key, isPublic = false) {
+    async get(key) {
       try {
         const snapshot = await get(child(ref(db), key));
         if (snapshot.exists()) {
@@ -302,61 +274,49 @@
         }
         return null;
       } catch (err) {
-        console.error('Storage get error:', err);
+        console.error('Erro ao buscar:', err);
         return null;
       }
     },
-    async list(prefix, isPublic = false) {
+    async list(prefix) {
       try {
         const snapshot = await get(ref(db));
-        if (!snapshot.exists()) {
-          console.log('❌ Banco de dados vazio');
-          return { keys: [] };
-        }
+        if (!snapshot.exists()) return { keys: [] };
         const data = snapshot.val();
-        console.log('📊 Dados no banco:', data);
-        const keys = Object.keys(data)
-          .filter(k => k.startsWith(prefix))
-          .sort();
-        console.log('🔍 Chaves encontradas:', keys);
+        const keys = Object.keys(data).filter(k => k.startsWith(prefix)).sort();
         return { keys };
       } catch (err) {
-        console.error('❌ Storage list error:', err);
+        console.error('Erro ao listar:', err);
         return { keys: [] };
+      }
+    },
+    async clearAllRSVP() {
+      try {
+        const listResult = await this.list('rsvp_');
+        const keys = listResult.keys || [];
+        for (const k of keys) {
+          await remove(ref(db, k));
+        }
+        return true;
+      } catch (err) {
+        console.error('Erro ao limpar banco:', err);
+        return false;
       }
     }
   };
-    import { deleteDoc, doc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-async function clearHostList(){
-  if(!confirm("Tem certeza que deseja limpar todas as confirmações?")) return;
-
-  try {
-    const snapshot = await getDocs(collection(db, "rsvp"));
-    for(const d of snapshot.docs){
-      await deleteDoc(doc(db, "rsvp", d.id));
-    }
-    document.getElementById('hostList').innerHTML = '';
-    document.getElementById('hostTotal').textContent = 'Lista limpa.';
-    alert("Todas as confirmações foram apagadas!");
-  } catch(err){
-    alert("Erro ao limpar: " + err.message);
+  // Checagem se é anfitrião via query param ?anfitriao=1
+  const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
+  if(isHost) {
+    document.getElementById('hostToggleBtn').style.display = 'block';
   }
-}
-const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
-if(isHost){ 
-  document.getElementById('hostToggleBtn').style.display = 'block'; 
-  document.getElementById('clearBtn').style.display = 'block'; 
-} else {
-  document.getElementById('clearBtn').style.display = 'none';
-}
-
 </script>
+</head>
 <body>
 
 <div id="app">
 
-  <!-- ============ SCREEN 1 — envelope fechado ============ -->
+  <!-- SCREEN 1: ENVELOPE -->
   <div class="screen show" id="screen-closed">
     <div class="envelope-wrap" id="envelopeWrap" onclick="openEnvelope()">
       <div class="card">
@@ -374,7 +334,7 @@ if(isHost){
     <div class="tap-hint-outer" id="tapHintOuter">toque para abrir ✧</div>
   </div>
 
-  <!-- ============ SCREEN 3 — carta ============ -->
+  <!-- SCREEN 2: CARTA -->
   <div class="screen" id="screen-letter">
     <div class="card">
       <div class="stitch-border"></div>
@@ -399,19 +359,24 @@ if(isHost){
       </div>
     </div>
 
+    <!-- PAINEL DO ANFITRIÃO -->
     <div class="host-panel" id="hostPanel">
       <h3>Lista de confirmados</h3>
       <div class="host-total" id="hostTotal">carregando…</div>
       <ul class="host-list" id="hostList"></ul>
-      <button class="host-refresh" onclick="loadHostList()">atualizar lista</button>
+      <div class="host-btn-group">
+        <button class="host-refresh" onclick="loadHostList()">atualizar</button>
+        <button class="host-clear" onclick="clearHostList()">limpar lista</button>
+      </div>
     </div>
   </div>
 
 </div>
 
+<!-- BOTÃO DO ANFITRIÃO -->
 <button class="host-toggle" id="hostToggleBtn" style="display:none" onclick="toggleHostPanel()">📋 anfitriã</button>
 
-<!-- ============ RSVP MODAL ============ -->
+<!-- RSVP MODAL -->
 <div class="modal-overlay" id="rsvpOverlay">
   <div class="modal">
     <h2>Confirmar presença</h2>
@@ -441,7 +406,7 @@ if(isHost){
 
 <script>
 /* =========================================================
-   CONFIG — edite estes valores para o seu convite
+   CONFIGURAÇÃO DO CONVITE
 ========================================================= */
 const CONFIG = {
   guestOfHonor: "Catarina",
@@ -462,7 +427,7 @@ const uberUrl = "https://m.uber.com/ul/?action=setPickup&pickup=my_location&drop
 document.getElementById('uberBtn').href = uberUrl;
 
 /* =========================================================
-   NAVEGAÇÃO ENTRE TELAS
+   NAVEGAÇÃO
 ========================================================= */
 const screenClosed = document.getElementById('screen-closed');
 const screenLetter = document.getElementById('screen-letter');
@@ -498,7 +463,7 @@ function openEnvelope(){
 }
 
 /* =========================================================
-   RSVP MODAL
+   MODAL RSVP
 ========================================================= */
 const rsvpOverlay = document.getElementById('rsvpOverlay');
 function openRsvp(){ rsvpOverlay.classList.add('show'); }
@@ -530,7 +495,7 @@ async function submitRsvp(){
     : [];
 
   if(!name){
-    msg.textContent = 'Escreve seu nome ali em cima :)';
+    msg.textContent = 'Escreva seu nome ali em cima :)';
     msg.className = 'form-msg err';
     return;
   }
@@ -548,42 +513,20 @@ async function submitRsvp(){
   };
   const key = 'rsvp_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 
-  let attempts = 0;
-  const maxAttempts = 3;
-  let success = false;
-
-  while(attempts < maxAttempts && !success){
-    try{
-      const result = await window.storage.set(key, entry, true);
-      if(result){
-        success = true;
-        document.getElementById('rsvpFormWrap').style.display = 'none';
-        document.getElementById('rsvpThanks').style.display = 'block';
-        const rsvpBtn = document.getElementById('rsvpOpenBtn');
-        rsvpBtn.innerHTML = '✅ Presença confirmada';
-        rsvpBtn.classList.add('confirmed');
-        rsvpBtn.disabled = true;
-      } else {
-        attempts++;
-        if(attempts < maxAttempts){
-          msg.textContent = `tentando novamente... (${attempts}/${maxAttempts})`;
-          msg.className = 'form-msg loading';
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-      }
-    }catch(err){
-      console.error('Submit error on attempt', attempts + 1, err);
-      attempts++;
-      if(attempts < maxAttempts){
-        msg.textContent = `tentando novamente... (${attempts}/${maxAttempts})`;
-        msg.className = 'form-msg loading';
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
+  try {
+    const result = await window.storage.set(key, entry);
+    if(result){
+      document.getElementById('rsvpFormWrap').style.display = 'none';
+      document.getElementById('rsvpThanks').style.display = 'block';
+      const rsvpBtn = document.getElementById('rsvpOpenBtn');
+      rsvpBtn.innerHTML = '✅ Presença confirmada';
+      rsvpBtn.classList.add('confirmed');
+      rsvpBtn.disabled = true;
+    } else {
+      throw new Error('Falha no armazenamento');
     }
-  }
-
-  if(!success){
-    msg.textContent = 'Não conseguimos salvar agora. Tenta de novo! (Os dados seguem aqui, não se preocupa)';
+  } catch(err) {
+    msg.textContent = 'Não conseguimos salvar agora. Tente novamente!';
     msg.className = 'form-msg err';
     submitBtn.disabled = false;
     submitBtn.textContent = 'tentar novamente';
@@ -593,11 +536,8 @@ async function submitRsvp(){
 }
 
 /* =========================================================
-   HOST VIEW (?anfitriao=1 na URL)
+   FUNÇÕES DO ANFITRIÃO
 ========================================================= */
-const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
-if(isHost){ document.getElementById('hostToggleBtn').style.display = 'block'; }
-
 function toggleHostPanel(){
   const panel = document.getElementById('hostPanel');
   panel.classList.toggle('show');
@@ -610,9 +550,8 @@ async function loadHostList(){
   listEl.innerHTML = '';
   totalEl.textContent = 'carregando…';
   try{
-    const listResult = await window.storage.list('rsvp_', true);
+    const listResult = await window.storage.list('rsvp_');
     const keys = (listResult && listResult.keys) ? listResult.keys : [];
-    console.log('🎉 Total de confirmações:', keys.length);
     
     if(keys.length === 0){
       totalEl.textContent = 'Ninguém confirmou ainda.';
@@ -622,13 +561,13 @@ async function loadHostList(){
     const entries = [];
     for(const k of keys){
       try{
-        const r = await window.storage.get(k, true);
+        const r = await window.storage.get(k);
         if(r && r.value){
           const parsed = (typeof r.value === 'string') ? JSON.parse(r.value) : r.value;
           entries.push(parsed);
           totalGuests += parsed.total || 1;
         }
-      }catch(e){ /* chave sumiu, ignora */ }
+      }catch(e){}
     }
     entries.sort((a,b) => (a.timestamp || '').localeCompare(b.timestamp || ''));
     totalEl.textContent = entries.length + ' confirmação(ões) · ' + totalGuests + ' pessoa(s) no total';
@@ -639,8 +578,25 @@ async function loadHostList(){
       return '<li><span class="who">' + escapeHtml(e.name) + '</span>' + comps + '</li>';
     }).join('');
   }catch(err){
-    console.error('Error loading host list:', err);
-    totalEl.textContent = 'Não consegui carregar a lista agora.';
+    console.error('Erro ao carregar anfitrião:', err);
+    totalEl.textContent = 'Não foi possível carregar a lista.';
+  }
+}
+
+async function clearHostList(){
+  if(!confirm("Tem certeza que deseja apagar TODAS as confirmações? Esta ação não pode ser desfeita.")) return;
+
+  const totalEl = document.getElementById('hostTotal');
+  totalEl.textContent = 'apagando...';
+
+  const ok = await window.storage.clearAllRSVP();
+  if(ok){
+    document.getElementById('hostList').innerHTML = '';
+    totalEl.textContent = 'Lista limpa com sucesso.';
+    alert("Todas as confirmações foram apagadas!");
+  } else {
+    alert("Erro ao apagar confirmações. Tente novamente.");
+    loadHostList();
   }
 }
 
@@ -651,7 +607,7 @@ function escapeHtml(str){
 }
 
 /* =========================================================
-   Floating background stars
+   ESTRELAS DE FUNDO
 ========================================================= */
 (function addStars(){
   const positions = [
