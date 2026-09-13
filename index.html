@@ -16,6 +16,12 @@
     <div id="hostTotal"></div>
     <ul id="hostList"></ul>
   </div>
+if(isHost){ 
+  document.getElementById('hostToggleBtn').style.display = 'block'; 
+  document.getElementById('clearBtn').style.display = 'block'; 
+} else {
+  document.getElementById('clearBtn').style.display = 'none';
+}
 
 <style>
   :root{
