@@ -394,12 +394,29 @@ document.getElementById('whereText').textContent = CONFIG.address;
 const mapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.mapsQuery);
 document.getElementById('mapsBtn').href = mapsUrl;
 
-// Substitua a linha do uberUrl por esta:
-const uberUrl = "https://m.uber.com/ul/?action=setPickup"
-  + "&dropoff[latitude]=-15.9868"
-  + "&dropoff[longitude]=-48.0625"
-  + "&dropoff[nickname]=" + encodeURIComponent("Condomínio Venturis Ventis")
-  + "&dropoff[formatted_address]=" + encodeURIComponent(CONFIG.address);
+// ADICIONE ESTE BLOCO NO LUGAR:
+const uberBtn = document.getElementById('uberBtn');
+uberBtn.removeAttribute('href'); // Remove o link estático
+uberBtn.onclick = function(e) {
+  e.preventDefault();
+  
+  const lat = "-15.9868";
+  const lng = "-48.0625";
+  const name = encodeURIComponent("Condomínio Venturis Ventis");
+  const addr = encodeURIComponent(CONFIG.address);
+
+  // Link direto para abrir o APP instalado no celular
+  const appUrl = `uber://?action=setPickup&dropoff[latitude]=${lat}&dropoff[longitude]=${lng}&dropoff[nickname]=${name}&dropoff[formatted_address]=${addr}`;
+  
+  // Link de fallback para a Web se não tiver o App
+  const webUrl = `https://m.uber.com/ul/?action=setPickup&dropoff[latitude]=${lat}&dropoff[longitude]=${lng}&dropoff[nickname]=${name}&dropoff[formatted_address]=${addr}`;
+
+  // Tenta abrir o App, se falhar em 1.5s abre a Web
+  window.location.href = appUrl;
+  setTimeout(() => {
+    window.location.href = webUrl;
+  }, 1500);
+};
 
 const screenClosed = document.getElementById('screen-closed');
 const screenLetter = document.getElementById('screen-letter');
