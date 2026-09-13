@@ -346,6 +346,9 @@ async function clearHostList(){
 const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
 if(isHost){ 
   document.getElementById('hostToggleBtn').style.display = 'block'; 
+  document.getElementById('clearBtn').style.display = 'block'; 
+} else {
+  document.getElementById('clearBtn').style.display = 'none';
 }
 
 </script>
