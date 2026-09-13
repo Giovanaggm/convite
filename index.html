@@ -16,17 +16,12 @@
     <div id="hostTotal"></div>
     <ul id="hostList"></ul>
   </div>
-if(isHost){ 
-  document.getElementById('hostToggleBtn').style.display = 'block'; 
-  document.getElementById('clearBtn').style.display = 'block'; 
-} else {
-  document.getElementById('clearBtn').style.display = 'none';
-}
+
 
 <style>
   :root{
     --navy-deep:#0d1226;
-    --navy-mid:#171f3f;
+  --navy-mid:#171f3f;
     --navy-soft:#212c56;
     --yellow:#ffd447;
     --cream:#f2ede1;
@@ -347,6 +342,10 @@ async function clearHostList(){
   } catch(err){
     alert("Erro ao limpar: " + err.message);
   }
+}
+const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
+if(isHost){ 
+  document.getElementById('hostToggleBtn').style.display = 'block'; 
 }
 
 </script>
