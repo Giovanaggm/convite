@@ -394,10 +394,12 @@ document.getElementById('whereText').textContent = CONFIG.address;
 const mapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.mapsQuery);
 document.getElementById('mapsBtn').href = mapsUrl;
 
-// Substitua a linha antiga do uberUrl por esta:
-const uberUrl = "https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=" 
-  + encodeURIComponent("Condomínio Venturis Ventis, Ponte Alta Norte, Gama - DF");
-
+// Substitua a linha do uberUrl por esta:
+const uberUrl = "https://m.uber.com/ul/?action=setPickup"
+  + "&dropoff[latitude]=-15.9868"
+  + "&dropoff[longitude]=-48.0625"
+  + "&dropoff[nickname]=" + encodeURIComponent("Condomínio Venturis Ventis")
+  + "&dropoff[formatted_address]=" + encodeURIComponent(CONFIG.address);
 
 const screenClosed = document.getElementById('screen-closed');
 const screenLetter = document.getElementById('screen-letter');
