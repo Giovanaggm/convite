@@ -285,9 +285,10 @@
     async set(key, value, isPublic = false) {
       try {
         await set(ref(db, key), value);
+        console.log('✅ Dados salvos em:', key);
         return true;
       } catch (err) {
-        console.error('Storage set error:', err);
+        console.error('❌ Storage set error:', err);
         return false;
       }
     },
@@ -305,17 +306,20 @@
     },
     async list(prefix, isPublic = false) {
       try {
-        const snapshot = await get(child(ref(db), ''));
+        const snapshot = await get(ref(db));
         if (!snapshot.exists()) {
+          console.log('❌ Banco de dados vazio');
           return { keys: [] };
         }
         const data = snapshot.val();
+        console.log('📊 Dados no banco:', data);
         const keys = Object.keys(data)
           .filter(k => k.startsWith(prefix))
           .sort();
+        console.log('🔍 Chaves encontradas:', keys);
         return { keys };
       } catch (err) {
-        console.error('Storage list error:', err);
+        console.error('❌ Storage list error:', err);
         return { keys: [] };
       }
     }
@@ -581,6 +585,8 @@ async function loadHostList(){
   try{
     const listResult = await window.storage.list('rsvp_', true);
     const keys = (listResult && listResult.keys) ? listResult.keys : [];
+    console.log('🎉 Total de confirmações:', keys.length);
+    
     if(keys.length === 0){
       totalEl.textContent = 'Ninguém confirmou ainda.';
       return;
