@@ -325,6 +325,24 @@
       }
     }
   };
+    import { deleteDoc, doc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+async function clearHostList(){
+  if(!confirm("Tem certeza que deseja limpar todas as confirmações?")) return;
+
+  try {
+    const snapshot = await getDocs(collection(db, "rsvp"));
+    for(const d of snapshot.docs){
+      await deleteDoc(doc(db, "rsvp", d.id));
+    }
+    document.getElementById('hostList').innerHTML = '';
+    document.getElementById('hostTotal').textContent = 'Lista limpa.';
+    alert("Todas as confirmações foram apagadas!");
+  } catch(err){
+    alert("Erro ao limpar: " + err.message);
+  }
+}
+
 </script>
 <body>
 
