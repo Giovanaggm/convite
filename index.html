@@ -227,6 +227,7 @@
   .form-msg{ font-size:.78rem; margin-top:8px; min-height:16px; }
   .form-msg.err{ color:#f18a8a; }
   .form-msg.ok{ color:#8fe0a0; }
+  .form-msg.loading{ color:#8b9bd1; }
   .thanks{ text-align:center; padding:8px 4px 4px; }
   .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); }
 
@@ -396,7 +397,7 @@
       <div class="form-msg" id="formMsg"></div>
       <div class="modal-actions">
         <button class="cancel" onclick="closeRsvp()">cancelar</button>
-        <button class="submit" onclick="submitRsvp()">enviar</button>
+        <button class="submit" id="submitBtn" onclick="submitRsvp()">enviar</button>
       </div>
     </div>
     <div id="rsvpThanks" class="thanks" style="display:none">
@@ -475,12 +476,28 @@ function openEnvelope(){
 ========================================================= */
 const rsvpOverlay = document.getElementById('rsvpOverlay');
 function openRsvp(){ rsvpOverlay.classList.add('show'); }
-function closeRsvp(){ rsvpOverlay.classList.remove('show'); }
+function closeRsvp(){ 
+  rsvpOverlay.classList.remove('show');
+  // Resetar o formulário quando fechar
+  document.getElementById('rsvpFormWrap').style.display = 'block';
+  document.getElementById('rsvpThanks').style.display = 'none';
+  document.getElementById('guestName').value = '';
+  document.getElementById('guestCompanions').value = '';
+  document.getElementById('formMsg').textContent = '';
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'enviar';
+}
+
+let isSubmitting = false;
 
 async function submitRsvp(){
+  if(isSubmitting) return;
+  
   const nameEl = document.getElementById('guestName');
   const compEl = document.getElementById('guestCompanions');
   const msg = document.getElementById('formMsg');
+  const submitBtn = document.getElementById('submitBtn');
   const name = nameEl.value.trim();
   const companionsRaw = compEl.value.trim();
   const companions = companionsRaw
@@ -493,8 +510,10 @@ async function submitRsvp(){
     return;
   }
 
+  isSubmitting = true;
+  submitBtn.disabled = true;
   msg.textContent = 'enviando...';
-  msg.className = 'form-msg';
+  msg.className = 'form-msg loading';
 
   const entry = {
     name,
@@ -504,22 +523,50 @@ async function submitRsvp(){
   };
   const key = 'rsvp:' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 
-  try{
-    const result = await window.storage.set(key, JSON.stringify(entry), true);
-    if(!result){
-      msg.textContent = 'Não deu pra salvar agora, tenta de novo em instantes.';
-      msg.className = 'form-msg err';
-      return;
+  // Retry logic: tenta até 3 vezes
+  let attempts = 0;
+  const maxAttempts = 3;
+  let success = false;
+
+  while(attempts < maxAttempts && !success){
+    try{
+      const result = await window.storage.set(key, JSON.stringify(entry), true);
+      if(result){
+        success = true;
+        document.getElementById('rsvpFormWrap').style.display = 'none';
+        document.getElementById('rsvpThanks').style.display = 'block';
+        const rsvpBtn = document.getElementById('rsvpOpenBtn');
+        rsvpBtn.innerHTML = '✅ Presença confirmada';
+        rsvpBtn.classList.add('confirmed');
+        rsvpBtn.disabled = true;
+      } else {
+        attempts++;
+        if(attempts < maxAttempts){
+          // Espera um pouco antes de tentar de novo
+          msg.textContent = `tentando novamente... (${attempts}/${maxAttempts})`;
+          msg.className = 'form-msg loading';
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
+    }catch(err){
+      console.error('Submit error on attempt', attempts + 1, err);
+      attempts++;
+      if(attempts < maxAttempts){
+        msg.textContent = `tentando novamente... (${attempts}/${maxAttempts})`;
+        msg.className = 'form-msg loading';
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
     }
-    document.getElementById('rsvpFormWrap').style.display = 'none';
-    document.getElementById('rsvpThanks').style.display = 'block';
-    const rsvpBtn = document.getElementById('rsvpOpenBtn');
-    rsvpBtn.innerHTML = '✅ Presença confirmada';
-    rsvpBtn.classList.add('confirmed');
-  }catch(err){
-    msg.textContent = 'Ops, algo falhou. Tenta de novo?';
-    msg.className = 'form-msg err';
   }
+
+  if(!success){
+    msg.textContent = 'Não conseguimos salvar agora. Tenta de novo! (Os dados seguem aqui, não se preocupa)';
+    msg.className = 'form-msg err';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'tentar novamente';
+  }
+
+  isSubmitting = false;
 }
 
 /* =========================================================
