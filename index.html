@@ -395,13 +395,9 @@ document.getElementById('whereText').textContent = CONFIG.address;
 const mapsUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.mapsQuery);
 document.getElementById('mapsBtn').href = mapsUrl;
 
-// Universal Link do Uber (Abre o App nativamente no iOS/Android sem ir para a App Store)
-const uberLat = "-15.9758";
-const uberLng = "-48.0485";
-const uberName = encodeURIComponent("Condomínio Venturis Ventis");
-const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=${uberLat}&dropoff[longitude]=${uberLng}&dropoff[nickname]=${uberName}`;
+  // Universal Link do Uber fixado nas coordenadas exatas (sem o parâmetro nickname para evitar desvio)
+const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=${CONFIG.lat}&dropoff[longitude]=${CONFIG.lng}`;
 document.getElementById('uberBtn').href = uberUrl;
-
 const screenClosed = document.getElementById('screen-closed');
 const screenLetter = document.getElementById('screen-letter');
 const envelopeWrapEl = document.getElementById('envelopeWrap');
