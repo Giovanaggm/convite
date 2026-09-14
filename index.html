@@ -174,7 +174,8 @@
   .modal{
     background:var(--navy-mid); border-radius:16px; padding:22px 18px;
     width:100%; max-width:340px; border:1px solid rgba(139,155,209,.35);
-    box-shadow:var(--shadow); text-align:left;
+    box-shadow:var(--shadow); text-align:left; box-sizing:border-border;
+    max-height:85vh; overflow-y:auto;
   }
   .modal h2{ font-family:'Pirata One', cursive; font-weight:400; font-size:1.7rem; margin:0 0 4px; color:var(--yellow); }
   .modal p.sub{ font-size:.82rem; color:#cfd6ec; margin:0 0 15px; }
@@ -186,7 +187,7 @@
     padding:11px 12px; font-family:'Quicksand'; font-size:1rem; resize:none;
   }
   .field input::placeholder, .field textarea::placeholder{ color:#8b93b3; }
-  .modal-actions{ display:flex; gap:10px; margin-top:6px; }
+  .modal-actions{ display:flex; gap:10px; margin-top:12px; justify-content:center; }
   .modal-actions button{ flex:1; border:none; border-radius:999px; padding:12px; font-weight:700; font-family:'Quicksand'; cursor:pointer; min-height:46px; }
   .modal-actions .cancel{ background:transparent; color:var(--periwinkle); border:1px solid rgba(139,155,209,.4); }
   .modal-actions .submit{ background:var(--yellow); color:var(--navy-deep); }
@@ -194,16 +195,37 @@
   .form-msg.err{ color:#f18a8a; }
   .form-msg.ok{ color:#8fe0a0; }
   .form-msg.loading{ color:#8b9bd1; }
-  .thanks{ text-align:center; padding:8px 4px 4px; }
-  .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); }
+  .thanks{ text-align:center; padding:12px 4px 4px; }
+  .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); margin-bottom:6px; }
 
-  /* MODAL DE PRESENTES */
+  /* GALERIA DE PRESENTES */
   .gift-box-info{
     background:rgba(242,237,225,.05); border-radius:12px; padding:12px;
-    border:1px dashed rgba(139,155,209,.3); font-size:.85rem; line-height:1.5; color:#e7e2d6; margin-bottom:12px;
+    border:1px dashed rgba(139,155,209,.3); font-size:.85rem; line-height:1.5; color:#e7e2d6; margin-bottom:16px;
   }
   .gift-box-info ul{ margin:6px 0 0; padding-left:18px; }
   .gift-box-info li{ margin-bottom:3px; }
+  
+  .gift-gallery{
+    display:flex; flex-direction:column; gap:12px; margin-bottom:16px;
+  }
+  .gift-card{
+    background:rgba(242,237,225,.04); border:1px solid rgba(139,155,209,.25);
+    border-radius:12px; overflow:hidden; display:flex; flex-direction:column;
+  }
+  .gift-card img{
+    width:100%; height:130px; object-fit:cover; background:var(--navy-soft);
+  }
+  .gift-card-body{ padding:10px 12px; display:flex; flex-direction:column; gap:6px; }
+  .gift-card-title{ font-weight:700; font-size:.9rem; color:var(--yellow); }
+  .gift-card-desc{ font-size:.78rem; color:#cfd6ec; line-height:1.4; }
+  .gift-card-link{
+    display:inline-block; margin-top:4px; text-align:center;
+    background:var(--periwinkle); color:var(--navy-deep);
+    font-size:.78rem; font-weight:700; padding:6px 12px; border-radius:8px;
+    text-decoration:none;
+  }
+
   .pix-card{
     background:rgba(255,212,71,.08); border:1px solid rgba(255,212,71,.25);
     border-radius:12px; padding:12px; text-align:center; margin-top:10px;
@@ -313,9 +335,9 @@
 <!-- RSVP MODAL -->
 <div class="modal-overlay" id="rsvpOverlay">
   <div class="modal">
-    <h2>Confirmar presença</h2>
-    <p class="sub">Conta pra gente quem vem! Se você for sozinho(a), pode deixar o segundo campo em branco.</p>
     <div id="rsvpFormWrap">
+      <h2>Confirmar presença</h2>
+      <p class="sub">Conta pra gente quem vem! Se você for sozinho(a), pode deixar o segundo campo em branco.</p>
       <div class="field">
         <label>Seu nome</label>
         <input id="guestName" type="text" placeholder="Ex: Maria Souza" />
@@ -330,10 +352,13 @@
         <button class="submit" id="submitBtn" onclick="submitRsvp()">enviar</button>
       </div>
     </div>
+
     <div id="rsvpThanks" class="thanks" style="display:none">
       <div class="big">Presença confirmada! 🎉</div>
-      <p style="font-size:.85rem;color:#cfd6ec;">Já anotamos aqui. Até a festa!</p>
-      <div class="modal-actions"><button class="submit" style="flex:none;padding:10px 22px;" onclick="closeRsvp()">fechar</button></div>
+      <p style="font-size:.85rem;color:#cfd6ec;margin:0 0 16px;">Já anotamos aqui. Até a festa!</p>
+      <div class="modal-actions">
+        <button class="submit" onclick="closeRsvp()">fechar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -342,15 +367,49 @@
 <div class="modal-overlay" id="giftOverlay">
   <div class="modal">
     <h2>Sugestões de Presente</h2>
-    <p class="sub">Sua presença é o maior presente! Mas se quiser agradar a aniversariante, aqui vão algumas dicas:</p>
+    <p class="sub">Sua presença é o maior presente! Se desejar nos presentear, deixamos algumas ideias abaixo:</p>
 
     <div class="gift-box-info">
-      <strong>Gostos da Catarina:</strong>
+      <strong>Preferências da Catarina:</strong>
       <ul>
-        <li><strong>Roupas:</strong> Tamanho 14 / PP</li>
-        <li><strong>Calçados:</strong> Tamanho 35</li>
-        <li><strong>Gosta de:</strong> Livros, papelaria fofa, maquiagem/skincare e itens do tema Coraline/mágica.</li>
+        <li><strong>Roupas:</strong> Tam. 14 / PP</li>
+        <li><strong>Calçados:</strong> Tam. 35</li>
       </ul>
+    </div>
+
+    <!-- GALERIA COM LINKS -->
+    <div class="gift-gallery">
+      
+      <!-- ITEM 1 -->
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400" alt="Livro">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Livros & HQs</div>
+          <div class="gift-card-desc">Histórias de fantasia, suspense infanto-juvenil ou itens da Coraline.</div>
+          <a class="gift-card-link" href="https://www.amazon.com.br" target="_blank" rel="noopener">Ver sugestões de livros</a>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400" alt="Papelaria">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Papelaria Fofa & Acessórios</div>
+          <div class="gift-card-desc">Cadernos, canetas coloridas, marcadores e itens decorativos de mesa.</div>
+          <a class="gift-card-link" href="https://www.amazon.com.br" target="_blank" rel="noopener">Ver opções de papelaria</a>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="gift-card">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400" alt="Skincare">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Skincare & Maquiagem Leve</div>
+          <div class="gift-card-desc">Hidratantes labiais, gloss, presilhas e produtos de cuidados suaves.</div>
+          <a class="gift-card-link" href="https://www.sephora.com.br" target="_blank" rel="noopener">Ver ideias de skincare</a>
+        </div>
+      </div>
+
     </div>
 
     <div class="pix-card">
