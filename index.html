@@ -4,14 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Catarina 12 anos</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Pirata+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-  
-<!-- Open Graph / WhatsApp Preview -->
+
+<!-- Meta tags para previa bonita no WhatsApp -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Convite Especial: Catarina 12 Anos 🧵✨">
 <meta property="og:description" content="Existe uma porta secreta... Venha comemorar os 12 anos da Catarina!">
-<meta property="og:image" content="https://occ-0-2218-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABcI17VEbpUlwChbKNZ1yf3CTeC-3elG2zOYGaxaa6XidSA4UeyYJ62kX2UVFW3RNF3tShpcY0u27MIcDmkIbI4TFchoIuCO2koiZ.jpg?r=36a">
+<meta property="og:image" content="https://giovanaggm.github.io/convite/imagem-capa.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Pirata+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
   :root{
     --navy-deep:#0d1226;
@@ -27,6 +29,8 @@
     --btn-maps-dark:#152238;
     --btn-uber:#2e1f45;
     --btn-uber-dark:#221735;
+    --btn-gift:#3b2d54;
+    --btn-gift-dark:#2a1f3d;
     --shadow: 0 16px 34px rgba(3,6,18,0.6);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -158,8 +162,10 @@
   .action-btn.rsvp.confirmed{ background:linear-gradient(160deg, #2e6b46, #1f4d33); }
   .action-btn.maps{ background:linear-gradient(160deg, var(--btn-maps), var(--btn-maps-dark)); }
   .action-btn.uber{ background:linear-gradient(160deg, var(--btn-uber), var(--btn-uber-dark)); }
+  .action-btn.gift{ background:linear-gradient(160deg, var(--btn-gift), var(--btn-gift-dark)); }
   .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
 
+  /* MODAIS */
   .modal-overlay{
     position:fixed; inset:0; background:rgba(4,6,16,.75);
     display:none; align-items:center; justify-content:center; padding:18px; z-index:50;
@@ -190,6 +196,24 @@
   .form-msg.loading{ color:#8b9bd1; }
   .thanks{ text-align:center; padding:8px 4px 4px; }
   .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); }
+
+  /* MODAL DE PRESENTES */
+  .gift-box-info{
+    background:rgba(242,237,225,.05); border-radius:12px; padding:12px;
+    border:1px dashed rgba(139,155,209,.3); font-size:.85rem; line-height:1.5; color:#e7e2d6; margin-bottom:12px;
+  }
+  .gift-box-info ul{ margin:6px 0 0; padding-left:18px; }
+  .gift-box-info li{ margin-bottom:3px; }
+  .pix-card{
+    background:rgba(255,212,71,.08); border:1px solid rgba(255,212,71,.25);
+    border-radius:12px; padding:12px; text-align:center; margin-top:10px;
+  }
+  .pix-title{ font-size:.78rem; color:var(--yellow); font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+  .pix-key{ font-family:monospace; font-size:.9rem; color:var(--cream); background:rgba(0,0,0,.2); padding:6px 8px; border-radius:6px; margin:6px 0; word-break:break-all; }
+  .copy-pix-btn{
+    background:var(--yellow); color:var(--navy-deep); border:none; border-radius:999px;
+    padding:6px 14px; font-size:.75rem; font-weight:700; cursor:pointer; font-family:'Quicksand';
+  }
 
   .host-toggle{
     position:fixed; top:10px; right:10px; z-index:40;
@@ -265,6 +289,7 @@
         <button class="action-btn rsvp" id="rsvpOpenBtn" onclick="openRsvp()">✅ Confirme a presença <span class="required-mark">(obrigatório)</span></button>
         <a class="action-btn maps" id="mapsBtn" href="#" target="_blank" rel="noopener">📍 Google Maps</a>
         <a class="action-btn uber" id="uberBtn" href="#" target="_blank" rel="noopener">🚗 Vai de Uber?</a>
+        <button class="action-btn gift" onclick="openGift()">🎁 Sugestão de Presente</button>
       </div>
     </div>
 
@@ -308,6 +333,338 @@
     <div id="rsvpThanks" class="thanks" style="display:none">
       <div class="big">Presença confirmada! 🎉</div>
       <p style="font-size:.85rem;color:#cfd6ec;">Já anotamos aqui. Até a festa!</p>
+      <div class="modal-actions"><button class="submit" style="flex:none;padding:10px 22px;" onclick="closeRsvp()">fechar</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- GIFT MODAL -->
+<div class="modal-overlay" id="giftOverlay">
+  <div class="modal">
+    <h2>Sugestões de Presente</h2>
+    <p class="sub">Sua presença é o maior presente! Mas se quiser agradar a aniversariante, aqui vão algumas dicas:</p>
+
+    <div class="gift-box-info">
+      <strong>Gostos da Catarina:</strong>
+      <ul>
+        <li><strong>Roupas:</strong> Tamanho 14 / PP</li>
+        <li><strong>Calçados:</strong> Tamanho 35</li>
+        <li><strong>Gosta de:</strong> Livros, papelaria fofa, maquiagem/skincare e itens do tema Coraline/mágica.</li>
+      </ul>
+    </div>
+
+    <div class="pix-card">
+      <div class="pix-title">Prefere contribuir em PIX? 🔑</div>
+      <div class="pix-key" id="pixKeyText">suachavepixaqui@email.com</div>
+      <button class="copy-pix-btn" id="copyPixBtn" onclick="copyPix()">copiar chave PIX</button>
+    </div>
+
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="cancel" onclick="closeGift()">fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- SDK DO FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXGY9mj_Bbk3laXh80trJiAG2AfinEr4k",
+    authDomain: "convite-catarina.firebaseapp.com",
+    databaseURL: "https://convite-catarina-default-rtdb.firebaseio.com",
+    projectId: "convite-catarina",
+    storageBucket: "convite-catarina.firebasestorage.app",
+    messagingSenderId: "673530294395",
+    appId: "1:673530294395:web:c9e65798d7615330e232de"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.storage = {
+    async set(key, value) {
+      try {
+        await set(ref(db, key), value);
+        return true;
+      } catch (err) {
+        console.error('Erro no set:', err);
+        return false;
+      }
+    },
+    async get(key) {
+      try {
+        const snapshot = await get(child(ref(db), key));
+        if (snapshot.exists()) return { value: snapshot.val() };
+        return null;
+      } catch (err) {
+        console.error('Erro no get:', err);
+        return null;
+      }
+    },
+    async list(prefix) {
+      try {
+        const snapshot = await get(ref(db));
+        if (!snapshot.exists()) return { keys: [] };
+        const data = snapshot.val();
+        const keys = Object.keys(data).filter(k => k.startsWith(prefix)).sort();
+        return { keys };
+      } catch (err) {
+        console.error('Erro no list:', err);
+        return { keys: [] };
+      }
+    },
+    async clearAllRSVP() {
+      try {
+        const listResult = await this.list('rsvp_');
+        const keys = listResult.keys || [];
+        for (const k of keys) {
+          await remove(ref(db, k));
+        }
+        return true;
+      } catch (err) {
+        console.error('Erro no clearAllRSVP:', err);
+        return false;
+      }
+    }
+  };
+
+  const isHost = new URLSearchParams(window.location.search).get('anfitriao') === '1';
+  if(isHost) {
+    document.getElementById('hostToggleBtn').style.display = 'block';
+  }
+</script>
+
+<script>
+const CONFIG = {
+  guestOfHonor: "Catarina",
+  age: 12,
+  whenText: "sábado, 3 de outubro · 17h",
+  address: "Avenida Buritis, Chácara 13, Condomínio Venturis Ventis, casa 22, Ponte Alta Norte, Gama, DF",
+  lat: "-15.9868",
+  lng: "-48.0625"
+};
+
+document.getElementById('whenText').textContent = CONFIG.whenText;
+document.getElementById('whereText').textContent = CONFIG.address;
+
+// Google Maps pelas coordenadas exatas
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${CONFIG.lat},${CONFIG.lng}`;
+document.getElementById('mapsBtn').href = mapsUrl;
+
+// Universal Link do Uber pelas coordenadas exatas
+const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=${CONFIG.lat}&dropoff[longitude]=${CONFIG.lng}`;
+document.getElementById('uberBtn').href = uberUrl;
+
+const screenClosed = document.getElementById('screen-closed');
+const screenLetter = document.getElementById('screen-letter');
+const envelopeWrapEl = document.getElementById('envelopeWrap');
+const claspBtnEl = document.getElementById('claspBtn');
+const tapHintOuterEl = document.getElementById('tapHintOuter');
+
+function showScreen(el){
+  [screenClosed, screenLetter].forEach(s => s.classList.remove('show'));
+  el.classList.add('show');
+}
+function goToLetter(){ showScreen(screenLetter); }
+function goToClosed(){
+  showScreen(screenClosed);
+  envelopeWrapEl.classList.remove('open');
+  claspBtnEl.classList.remove('pop');
+  tapHintOuterEl.textContent = 'toque para abrir ✧';
+}
+
+let envelopeBusy = false;
+function openEnvelope(){
+  if(envelopeBusy) return;
+  envelopeBusy = true;
+  claspBtnEl.classList.add('pop');
+  tapHintOuterEl.textContent = 'abrindo…';
+  setTimeout(() => {
+    envelopeWrapEl.classList.add('open');
+  }, 350);
+  setTimeout(() => {
+    goToLetter();
+    envelopeBusy = false;
+  }, 350 + 950);
+}
+
+// RSVP MODAL
+const rsvpOverlay = document.getElementById('rsvpOverlay');
+function openRsvp(){ rsvpOverlay.classList.add('show'); }
+function closeRsvp(){ 
+  rsvpOverlay.classList.remove('show');
+  document.getElementById('rsvpFormWrap').style.display = 'block';
+  document.getElementById('rsvpThanks').style.display = 'none';
+  document.getElementById('guestName').value = '';
+  document.getElementById('guestCompanions').value = '';
+  document.getElementById('formMsg').textContent = '';
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'enviar';
+}
+
+// GIFT MODAL
+const giftOverlay = document.getElementById('giftOverlay');
+function openGift(){ giftOverlay.classList.add('show'); }
+function closeGift(){ giftOverlay.classList.remove('show'); }
+
+function copyPix(){
+  const pixKey = document.getElementById('pixKeyText').innerText;
+  navigator.clipboard.writeText(pixKey).then(() => {
+    const btn = document.getElementById('copyPixBtn');
+    btn.innerText = 'copiado! ✓';
+    setTimeout(() => { btn.innerText = 'copiar chave PIX'; }, 2000);
+  });
+}
+
+let isSubmitting = false;
+
+async function submitRsvp(){
+  if(isSubmitting) return;
+  
+  const nameEl = document.getElementById('guestName');
+  const compEl = document.getElementById('guestCompanions');
+  const msg = document.getElementById('formMsg');
+  const submitBtn = document.getElementById('submitBtn');
+  const name = nameEl.value.trim();
+  const companionsRaw = compEl.value.trim();
+  const companions = companionsRaw
+    ? companionsRaw.split('\n').map(s => s.trim()).filter(Boolean)
+    : [];
+
+  if(!name){
+    msg.textContent = 'Escreva seu nome ali em cima :)';
+    msg.className = 'form-msg err';
+    return;
+  }
+
+  isSubmitting = true;
+  submitBtn.disabled = true;
+  msg.textContent = 'enviando...';
+  msg.className = 'form-msg loading';
+
+  const entry = {
+    name,
+    companions,
+    total: 1 + companions.length,
+    timestamp: new Date().toISOString()
+  };
+  const key = 'rsvp_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+
+  try {
+    const result = await window.storage.set(key, entry);
+    if(result){
+      document.getElementById('rsvpFormWrap').style.display = 'none';
+      document.getElementById('rsvpThanks').style.display = 'block';
+      const rsvpBtn = document.getElementById('rsvpOpenBtn');
+      rsvpBtn.innerHTML = '✅ Presença confirmada';
+      rsvpBtn.classList.add('confirmed');
+      rsvpBtn.disabled = true;
+    } else {
+      throw new Error('Falha ao salvar');
+    }
+  } catch(err) {
+    msg.textContent = 'Não conseguimos salvar agora. Tente novamente!';
+    msg.className = 'form-msg err';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'tentar novamente';
+  }
+
+  isSubmitting = false;
+}
+
+function toggleHostPanel(){
+  const panel = document.getElementById('hostPanel');
+  panel.classList.toggle('show');
+  if(panel.classList.contains('show')){ loadHostList(); }
+}
+
+async function loadHostList(){
+  const listEl = document.getElementById('hostList');
+  const totalEl = document.getElementById('hostTotal');
+  listEl.innerHTML = '';
+  totalEl.textContent = 'carregando…';
+  try{
+    const listResult = await window.storage.list('rsvp_');
+    const keys = (listResult && listResult.keys) ? listResult.keys : [];
+    
+    if(keys.length === 0){
+      totalEl.textContent = 'Ninguém confirmou ainda.';
+      return;
+    }
+    let totalGuests = 0;
+    const entries = [];
+    for(const k of keys){
+      try{
+        const r = await window.storage.get(k);
+        if(r && r.value){
+          const parsed = (typeof r.value === 'string') ? JSON.parse(r.value) : r.value;
+          entries.push(parsed);
+          totalGuests += parsed.total || 1;
+        }
+      }catch(e){}
+    }
+    entries.sort((a,b) => (a.timestamp || '').localeCompare(b.timestamp || ''));
+    totalEl.textContent = entries.length + ' confirmação(ões) · ' + totalGuests + ' pessoa(s) no total';
+    listEl.innerHTML = entries.map(e => {
+      const comps = (e.companions && e.companions.length)
+        ? '<div class="comps">+ ' + e.companions.join(', ') + '</div>'
+        : '<div class="comps">vem sozinho(a)</div>';
+      return '<li><span class="who">' + escapeHtml(e.name) + '</span>' + comps + '</li>';
+    }).join('');
+  }catch(err){
+    console.error('Erro ao carregar lista:', err);
+    totalEl.textContent = 'Não foi possível carregar a lista.';
+  }
+}
+
+async function clearHostList(){
+  if(!confirm("Tem certeza que deseja apagar TODAS as confirmações da lista?")) return;
+
+  const totalEl = document.getElementById('hostTotal');
+  totalEl.textContent = 'apagando...';
+
+  try {
+    const ok = await window.storage.clearAllRSVP();
+    if(ok){
+      document.getElementById('hostList').innerHTML = '';
+      totalEl.textContent = 'Ninguém confirmou ainda.';
+      alert("Todas as confirmações foram apagadas!");
+    } else {
+      throw new Error('Erro ao apagar');
+    }
+  } catch(err) {
+    alert("Erro ao apagar. Verifique se as Regras de Segurança do Firebase permitem gravação.");
+    loadHostList();
+  }
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+(function addStars(){
+  const positions = [
+    {t:'6%', l:'10%', s:12, d:0}, {t:'14%', l:'82%', s:9, d:.6},
+    {t:'40%', l:'4%', s:7, d:1.2}, {t:'62%', l:'90%', s:10, d:.3},
+    {t:'85%', l:'15%', s:8, d:.9}, {t:'92%', l:'70%', s:10, d:1.5}
+  ];
+  positions.forEach(p => {
+    const s = document.createElement('div');
+    s.className = 'sky-star';
+    s.style.top = p.t; s.style.left = p.l;
+    s.style.animationDelay = p.d + 's';
+    s.innerHTML = '<svg width="'+p.s+'" height="'+p.s+'" viewBox="0 0 24 24" fill="#ffd447"><path d="M12 0l2.9 8.2L23 11l-8.1 2.8L12 22l-2.9-8.2L1 11l8.1-2.8z"/></svg>';
+    document.body.appendChild(s);
+  });
+})();
+</script>
+</body>
+</html>      <p style="font-size:.85rem;color:#cfd6ec;">Já anotamos aqui. Até a festa!</p>
       <div class="modal-actions"><button class="submit" style="flex:none;padding:10px 22px;" onclick="closeRsvp()">fechar</button></div>
     </div>
   </div>
