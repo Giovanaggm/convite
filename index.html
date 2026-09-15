@@ -165,21 +165,36 @@
   .action-btn.gift{ background:linear-gradient(160deg, var(--btn-gift), var(--btn-gift-dark)); }
   .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
 
-/* MODAIS */
+/* Correção do contêiner principal para centralizar na tela do PC */
+#app {
+  width: 100%;
+  max-width: 340px;
+  position: relative;
+  margin: 0 auto;
+  display: block; /* Garante fluxo vertical normal */
+}
+
+/* MODAIS - Fixados e sobrepostos acima de tudo na tela */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(4, 6, 16, 0.75);
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(4, 6, 16, 0.82) !important;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 18px;
-  z-index: 50;
+  z-index: 9999 !important; /* Fica acima de qualquer outro elemento */
+  box-sizing: border-box;
 }
 
 .modal-overlay.show {
   display: flex !important;
-  flex-direction: column !important; /* Força o alinhamento vertical */
+  flex-direction: column !important;
 }
 
 .modal {
@@ -187,65 +202,20 @@
   border-radius: 16px;
   padding: 22px 18px;
   width: 100%;
-  max-width: 340px; /* Trava a largura no mobile e PC */
+  max-width: 360px;
   border: 1px solid rgba(139, 155, 209, 0.35);
   box-shadow: var(--shadow);
   text-align: left;
-  box-sizing: border-box; /* Corrigido de border-border */
+  box-sizing: border-box;
   max-height: 85vh;
   overflow-y: auto;
-  margin: 0 auto;
+  margin: 0 auto !important;
 }
 
-.modal h2 { font-family: 'Pirata One', cursive; font-weight: 400; font-size: 1.7rem; margin: 0 0 4px; color: var(--yellow); }
-.modal p.sub { font-size: .82rem; color: #cfd6ec; margin: 0 0 15px; }
-
-.field { margin-bottom: 13px; }
-.field label { display: block; font-size: .78rem; color: var(--periwinkle); margin-bottom: 5px; }
-.field input, .field textarea {
-  width: 100%;
-  border-radius: 10px;
-  border: 1px solid rgba(139, 155, 209, .4);
-  background: rgba(242, 237, 225, .06);
-  color: var(--cream);
-  padding: 11px 12px;
-  font-family: 'Quicksand';
-  font-size: 1rem;
-  resize: none;
-  box-sizing: border-box;
-}
-.field input::placeholder, .field textarea::placeholder { color: #8b93b3; }
-
-.modal-actions { display: flex; gap: 10px; margin-top: 12px; justify-content: center; }
-.modal-actions button { flex: 1; border: none; border-radius: 999px; padding: 12px; font-weight: 700; font-family: 'Quicksand'; cursor: pointer; min-height: 46px; }
-.modal-actions .cancel { background: transparent; color: var(--periwinkle); border: 1px solid rgba(139, 155, 209, .4); }
-.modal-actions .submit { background: var(--yellow); color: var(--navy-deep); }
-
-.form-msg { font-size: .78rem; margin-top: 8px; min-height: 16px; }
-.form-msg.err { color: #f18a8a; }
-.form-msg.ok { color: #8fe0a0; }
-.form-msg.loading { color: #8b9bd1; }
-
-.thanks { text-align: center; padding: 12px 4px 4px; }
-.thanks .big { font-family: 'Pirata One', cursive; font-size: 1.7rem; color: var(--yellow); margin-bottom: 6px; }
-
-/* GALERIA DE PRESENTES */
-.gift-box-info {
-  background: rgba(242, 237, 225, .05);
-  border-radius: 12px;
-  padding: 12px;
-  border: 1px dashed rgba(139, 155, 209, .3);
-  font-size: .85rem;
-  line-height: 1.5;
-  color: #e7e2d6;
-  margin-bottom: 16px;
-}
-.gift-box-info ul { margin: 6px 0 0; padding-left: 18px; }
-.gift-box-info li { margin-bottom: 3px; }
-
+/* GALERIA DE PRESENTES - Empilhamento vertical perfeito */
 .gift-gallery {
   display: flex !important;
-  flex-direction: column !important; /* Empilha as opções de presente verticalmente */
+  flex-direction: column !important;
   gap: 12px;
   margin-bottom: 16px;
   width: 100%;
@@ -258,38 +228,6 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-}
-.gift-card img {
-  width: 100%;
-  height: 130px;
-  object-fit: cover;
-  background: var(--navy-soft);
-}
-.gift-card-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
-.gift-card-title { font-weight: 700; font-size: .9rem; color: var(--yellow); }
-.gift-card-desc { font-size: .78rem; color: #cfd6ec; line-height: 1.4; }
-.gift-card-link {
-  display: inline-block;
-  margin-top: 4px;
-  text-align: center;
-  background: var(--periwinkle);
-  color: var(--navy-deep);
-  font-size: .78rem;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-.pix-card {
-  background: rgba(255, 212, 71, .08);
-  border: 1px solid rgba(255, 212, 71, .25);
-  border-radius: 12px;
-  padding: 12px;
-  text-align: center;
-  margin-top: 10px;
   width: 100%;
   box-sizing: border-box;
 }
