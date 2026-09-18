@@ -3,43 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>SURPRESA!</title>
+<title>Catarina 12 anos</title>
 
-<!--previa whatsapp -->
+<!--previa whatsap -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="É SURPRESA! Vanessa 45 Anos 🦋✨">
-<meta property="og:description" content="SEGREDO ABSOLUTO! Almoço surpresa para comemorar os 45 anos da Vanessa!">
+<meta property="og:title" content="Convite Especial: Catarina 12 Anos 🧵✨">
+<meta property="og:description" content="Existe uma porta secreta... Venha comemorar os 12 anos da Catarina!">
+<meta property="og:image" content="https://giovanaggm.github.io/convite/imagem-capa.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Pirata+One&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    /* paleta pastel a partir das 5 cores que você mandou */
-    --sky-soft:#dceffa;     /* quase branco, topo do degradê */
-    --sky-mid:#aedafa;      /* meio do degradê */
-    --sky-deep:#b7c8f0;     /* base do degradê (lavanda-azulado) */
-    --blue-light:#1f6f9e;   /* azul profundo — usado para títulos/CTAs de destaque */
-    --cream:#1d3557;        /* tinta escura — texto principal (contraste sobre o card claro) */
-    --periwinkle:#5b86ab;   /* texto/borda secundária */
-    --lilac:#5f92ca;        /* acento lilás-azulado (tarja de segredo) */
-    --btn-rsvp:#94c8ef; --btn-rsvp-dark:#6fa9d9;
-    --btn-maps:#99c4f1; --btn-maps-dark:#74a3dd;
-    --btn-uber:#b7c8f0; --btn-uber-dark:#93a8dd;
-    --btn-gift:#9be6fa; --btn-gift-dark:#5fd0ec;
-    --shadow: 0 16px 34px rgba(70,110,160,0.28);
+    --navy-deep:#0d1226;
+    --navy-mid:#171f3f;
+    --navy-soft:#212c56;
+    --yellow:#ffd447;
+    --cream:#f2ede1;
+    --periwinkle:#8b9bd1;
+    --pink:#e0729a;
+    --btn-rsvp:#6b1c3f;
+    --btn-rsvp-dark:#54142f;
+    --btn-maps:#1c2c4a;
+    --btn-maps-dark:#152238;
+    --btn-uber:#2e1f45;
+    --btn-uber-dark:#221735;
+    --btn-gift:#3b2d54;
+    --btn-gift-dark:#2a1f3d;
+    --shadow: 0 16px 34px rgba(3,6,18,0.6);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
   body{
     min-height:100vh; min-height:100dvh;
-    background: radial-gradient(120% 90% at 50% -10%, #ffffff 0%, var(--sky-mid) 55%, var(--sky-deep) 100%);
+    background: radial-gradient(120% 90% at 50% -10%, #1c2a52 0%, var(--navy-deep) 55%, #06081a 100%);
     font-family:'Quicksand', sans-serif;
     color:var(--cream);
     display:flex; align-items:center; justify-content:center;
     padding:24px 14px; overflow-x:hidden;
   }
 
+  /* Contêiner principal fixado em coluna para o PC e Mobile */
   #app{
     width:100%;
     max-width:340px;
@@ -49,26 +54,26 @@
     flex-direction:column;
   }
 
-  .sky-butterfly{ position:fixed; pointer-events:none; opacity:.6; animation: flutter 4.2s ease-in-out infinite; }
-  @keyframes flutter{ 0%,100%{opacity:.3; transform:translateY(0) rotate(-4deg);} 50%{opacity:.8; transform:translateY(-8px) rotate(4deg);} }
-  @media (prefers-reduced-motion: reduce){ .sky-butterfly{ animation:none; } }
+  .sky-star{ position:fixed; pointer-events:none; opacity:.5; animation: twinkle 3.6s ease-in-out infinite; }
+  @keyframes twinkle{ 0%,100%{opacity:.2; transform:scale(.9);} 50%{opacity:.75; transform:scale(1.05);} }
+  @media (prefers-reduced-motion: reduce){ .sky-star{ animation:none; } }
 
   .card{
     position:relative;
-    background:linear-gradient(160deg, var(--sky-soft), var(--sky-mid) 60%, var(--sky-deep));
+    background:linear-gradient(160deg, var(--navy-soft), var(--navy-mid) 60%, var(--navy-deep));
     border-radius:16px;
     box-shadow:var(--shadow);
-    border:1px solid rgba(74,109,145,.25);
+    border:1px solid rgba(139,155,209,.35);
     overflow:hidden;
   }
   .stitch-border{
     position:absolute; inset:10px;
-    border:2px dashed rgba(74,109,145,.35);
+    border:2px dashed rgba(242,237,225,.32);
     border-radius:10px;
     pointer-events:none;
   }
 
-  .deco-bfly{ position:absolute; }
+  .deco-star{ position:absolute; }
 
   .screen{ display:none; animation: riseIn .55s ease both; }
   .screen.show{ display:block; }
@@ -83,37 +88,37 @@
   #screen-closed .card{ position:absolute; inset:0; }
   #screen-closed .envelope-flap{
     position:absolute; top:0; left:0; right:0; height:58%;
-    background:linear-gradient(200deg, var(--sky-soft), var(--sky-mid));
+    background:linear-gradient(200deg, var(--navy-soft), var(--navy-mid));
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top center;
     transition: transform 1s cubic-bezier(.6,-0.2,.35,1.3);
     z-index:6;
-    border-bottom:1px solid rgba(74,109,145,.25);
+    border-bottom:1px solid rgba(139,155,209,.25);
     border-radius:16px 16px 0 0;
   }
   #screen-closed .envelope-wrap.open .envelope-flap{ transform: rotateX(178deg); }
 
-  #screen-closed .deco-bfly{ color:var(--periwinkle); }
-  #screen-closed .deco-bfly.b-a{ top:12px; left:14px; width:22px; }
-  #screen-closed .deco-bfly.b-b{ top:18px; right:18px; width:16px; color:var(--lilac); }
-  #screen-closed .deco-bfly.b-c{ bottom:14px; left:20px; width:18px; color:var(--lilac); }
-  #screen-closed .deco-bfly.b-d{ bottom:20px; right:16px; width:14px; }
+  #screen-closed .deco-star{ color:var(--yellow); }
+  #screen-closed .deco-star.star-a{ top:14px; left:16px; width:13px; }
+  #screen-closed .deco-star.star-b{ top:20px; right:22px; width:10px; color:var(--periwinkle); }
+  #screen-closed .deco-star.star-c{ bottom:16px; left:22px; width:11px; color:var(--periwinkle); }
+  #screen-closed .deco-star.star-d{ bottom:22px; right:18px; width:9px; }
 
   .clasp-btn{
     position:absolute; top:calc(58% - 17px); left:50%;
     width:34px; height:34px; border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #ffffff, var(--btn-maps) 70%);
-    box-shadow: inset 0 -3px 5px rgba(70,110,160,.25), 0 3px 8px rgba(70,110,160,.35);
+    background:radial-gradient(circle at 35% 30%, #ee94b3, var(--pink) 70%);
+    box-shadow: inset 0 -3px 5px rgba(0,0,0,.35), 0 3px 8px rgba(0,0,0,.4);
     transform:translateX(-50%);
     z-index:7;
   }
   .clasp-btn::before{
     content:''; position:absolute; inset:0; margin:auto; width:15px;height:15px;
     background-image:
-      radial-gradient(circle at 30% 30%, var(--cream) 2px, transparent 2.1px),
-      radial-gradient(circle at 70% 30%, var(--cream) 2px, transparent 2.1px),
-      radial-gradient(circle at 30% 70%, var(--cream) 2px, transparent 2.1px),
-      radial-gradient(circle at 70% 70%, var(--cream) 2px, transparent 2.1px);
+      radial-gradient(circle at 30% 30%, var(--navy-deep) 2px, transparent 2.1px),
+      radial-gradient(circle at 70% 30%, var(--navy-deep) 2px, transparent 2.1px),
+      radial-gradient(circle at 30% 70%, var(--navy-deep) 2px, transparent 2.1px),
+      radial-gradient(circle at 70% 70%, var(--navy-deep) 2px, transparent 2.1px);
   }
   .clasp-btn.pop{ animation: claspPop .55s ease forwards; }
   @keyframes claspPop{
@@ -133,32 +138,25 @@
     font-family:'Quicksand'; font-size:.82rem; cursor:pointer;
     display:flex; align-items:center; gap:4px; margin:0 0 8px -4px;
   }
-  .secret-tag{
-    display:inline-block; margin-bottom:10px; padding:5px 12px;
-    border:1px solid rgba(124,111,201,.5); border-radius:999px;
-    font-family:"Alfa Slab One", serif; font-size:1rem; color:var(--lilac);
-    background:rgba(255,255,255,.5);
-  }
   .eyebrow{ font-family:'Caveat', cursive; color:var(--periwinkle); font-size:1.05rem; margin-bottom:4px; }
   h1.name{
-    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:600;
-    font-size:2.9rem; line-height:1; margin:2px 0 10px; color:var(--blue-light);
-    text-shadow: 0 2px 14px rgba(31,111,158,.2);
+    font-family:'Pirata One', cursive; font-weight:400;
+    font-size:2.9rem; line-height:1; margin:2px 0 10px; color:var(--yellow);
+    text-shadow: 0 2px 14px rgba(255,212,71,.3);
   }
   .age-row{
     display:flex; align-items:center; justify-content:center; gap:10px;
-    color:var(--blue-light); font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.5rem;
+    color:var(--yellow); font-family:'Pirata One', cursive; font-size:1.5rem;
   }
-  .age-row .bfly{ font-size:1.1rem; }
-  .invite-copy{ font-size:.95rem; line-height:1.55; color:var(--cream); max-width:290px; margin:16px auto 4px; }
-  .invite-copy .meaning{ display:block; margin-top:10px; font-family:'Caveat', cursive; font-size:1.05rem; color:var(--blue-light); }
+  .age-row .star{ font-size:1.1rem; }
+  .invite-copy{ font-size:.95rem; line-height:1.55; color:#e7e2d6; max-width:290px; margin:16px auto 4px; }
   .when-where{
     margin:18px 0 4px; padding:13px 10px;
-    border-top:1px dashed rgba(74,109,145,.32);
-    border-bottom:1px dashed rgba(74,109,145,.32);
+    border-top:1px dashed rgba(242,237,225,.28);
+    border-bottom:1px dashed rgba(242,237,225,.28);
     font-size:.88rem; line-height:1.7;
   }
-  .when-where strong{ color:var(--blue-light); font-weight:700; }
+  .when-where strong{ color:var(--yellow); font-weight:700; }
   .actions{ display:flex; flex-direction:column; gap:11px; margin-top:20px; }
   .action-btn{
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -166,22 +164,26 @@
     font-family:'Quicksand'; font-weight:700; font-size:.92rem;
     cursor:pointer; text-decoration:none; color:var(--cream);
     transition: transform .15s ease; min-height:48px;
-    border:1px solid rgba(29,53,87,.06);
+    border:1px solid rgba(242,237,225,.08);
   }
   .action-btn:active{ transform:scale(.97); }
   .action-btn.rsvp{ background:linear-gradient(160deg, var(--btn-rsvp), var(--btn-rsvp-dark)); }
-  .action-btn.rsvp.confirmed{ background:linear-gradient(160deg, #4caf7d, #2e6b46); color:#eaf6fd; }
+  .action-btn.rsvp.confirmed{ background:linear-gradient(160deg, #2e6b46, #1f4d33); }
   .action-btn.maps{ background:linear-gradient(160deg, var(--btn-maps), var(--btn-maps-dark)); }
   .action-btn.uber{ background:linear-gradient(160deg, var(--btn-uber), var(--btn-uber-dark)); }
   .action-btn.gift{ background:linear-gradient(160deg, var(--btn-gift), var(--btn-gift-dark)); }
   .required-mark{ font-size:.7rem; opacity:.85; font-weight:600; }
 
-  /* MODAIS */
+  /* MODAIS - Fixados e totalmente independentes do app */
   .modal-overlay {
     position: fixed !important;
-    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
-    width: 100vw !important; height: 100vh !important;
-    background: rgba(15,35,55,.55) !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(4, 6, 16, 0.82) !important;
     display: none;
     align-items: center;
     justify-content: center;
@@ -189,14 +191,19 @@
     z-index: 9999 !important;
     box-sizing: border-box;
   }
-  .modal-overlay.show { display: flex !important; flex-direction: column !important; }
+
+  .modal-overlay.show {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
   .modal {
-    background: var(--sky-soft);
+    background: var(--navy-mid);
     border-radius: 16px;
     padding: 22px 18px;
     width: 100%;
     max-width: 360px;
-    border: 1px solid rgba(74,109,145,.3);
+    border: 1px solid rgba(139, 155, 209, 0.35);
     box-shadow: var(--shadow);
     text-align: left;
     box-sizing: border-box;
@@ -205,46 +212,84 @@
     overflow-x: hidden;
     margin: 0 auto !important;
     flex: none;
-    color: var(--cream);
   }
+  /* rede de segurança: nada dentro do modal ultrapassa a largura dele */
   .modal * { max-width: 100%; }
 
-  .modal h2{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:600; font-size:1.7rem; margin:0 0 4px; color:var(--blue-light); }
-  .modal p.sub{ font-size:.82rem; color:var(--periwinkle); margin:0 0 15px; }
+  .modal h2{ font-family:'Pirata One', cursive; font-weight:400; font-size:1.7rem; margin:0 0 4px; color:var(--yellow); }
+  .modal p.sub{ font-size:.82rem; color:#cfd6ec; margin:0 0 15px; }
 
   .field{ margin-bottom:13px; }
   .field label{ display:block; font-size:.78rem; color:var(--periwinkle); margin-bottom:5px; }
   .field input, .field textarea{
-    width:100%; border-radius:10px; border:1px solid rgba(74,109,145,.35);
-    background:rgba(255,255,255,.7); color:var(--cream);
+    width:100%; border-radius:10px; border:1px solid rgba(139,155,209,.4);
+    background:rgba(242,237,225,.06); color:var(--cream);
     padding:11px 12px; font-family:'Quicksand'; font-size:1rem; resize:none;
     box-sizing:border-box;
   }
-  .field input::placeholder, .field textarea::placeholder{ color:#8b9fb8; }
+  .field input::placeholder, .field textarea::placeholder{ color:#8b93b3; }
 
   .modal-actions{ display:flex; gap:10px; margin-top:12px; justify-content:center; }
   .modal-actions button{ flex:1; border:none; border-radius:999px; padding:12px; font-weight:700; font-family:'Quicksand'; cursor:pointer; min-height:46px; }
-  .modal-actions .cancel{ background:transparent; color:var(--periwinkle); border:1px solid rgba(74,109,145,.4); }
-  .modal-actions .submit{ background:var(--blue-light); color:var(--sky-soft); }
+  .modal-actions .cancel{ background:transparent; color:var(--periwinkle); border:1px solid rgba(139,155,209,.4); }
+  .modal-actions .submit{ background:var(--yellow); color:var(--navy-deep); }
 
   .form-msg{ font-size:.78rem; margin-top:8px; min-height:16px; }
-  .form-msg.err{ color:#d1546b; }
-  .form-msg.ok{ color:#2e8f5c; }
-  .form-msg.loading{ color:var(--periwinkle); }
+  .form-msg.err{ color:#f18a8a; }
+  .form-msg.ok{ color:#8fe0a0; }
+  .form-msg.loading{ color:#8b9bd1; }
 
   .thanks{ text-align:center; padding:12px 4px 4px; }
-  .thanks .big{ font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.7rem; color:var(--blue-light); margin-bottom:6px; }
-  .thanks p{ color:var(--cream) !important; }
+  .thanks .big{ font-family:'Pirata One', cursive; font-size:1.7rem; color:var(--yellow); margin-bottom:6px; }
+
+  /* GALERIA DE PRESENTES & PIX */
+  .gift-box-info{
+    background:rgba(242,237,225,.05); border-radius:12px; padding:12px;
+    border:1px dashed rgba(139,155,209,.3); font-size:.85rem; line-height:1.5; color:#e7e2d6; margin-bottom:16px;
+  }
+  .gift-box-info ul{ margin:6px 0 0; padding-left:18px; }
+  .gift-box-info li{ margin-bottom:3px; }
+
+  .gift-gallery {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    gap: 12px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .gift-card {
+    background: rgba(242, 237, 225, .04);
+    border: 1px solid rgba(139, 155, 209, .25);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .gift-card img{ display:block; width:100%; max-width:100%; height:130px; object-fit:cover; background:var(--navy-soft); }
+  .gift-card-body{ padding:10px 12px; display:flex; flex-direction:column; gap:6px; }
+  .gift-card-title{ font-weight:700; font-size:.9rem; color:var(--yellow); }
+  .gift-card-desc{ font-size:.78rem; color:#cfd6ec; line-height:1.4; }
+  .gift-card-link{
+    display:block; margin-top:4px; text-align:center;
+    background:var(--periwinkle); color:var(--navy-deep);
+    font-size:.78rem; font-weight:700; padding:8px 12px; border-radius:8px;
+    text-decoration:none; box-sizing:border-box; overflow-wrap:break-word;
+  }
 
   .pix-card{
-    background:rgba(255,255,255,.55); border:1px solid rgba(74,109,145,.3);
+    background:rgba(255,212,71,.08); border:1px solid rgba(255,212,71,.25);
     border-radius:12px; padding:12px; text-align:center; margin-top:10px; width:100%; box-sizing:border-box;
   }
-  .pix-title { font-size: .78rem; color: var(--blue-light); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
-  .pix-key { font-family: monospace; font-size: .9rem; color: var(--cream); background: rgba(74,109,145,.12); padding: 6px 8px; border-radius: 6px; margin: 6px 0; word-break: break-all; }
+  .pix-title { font-size: .78rem; color: var(--yellow); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  .pix-key { font-family: monospace; font-size: .9rem; color: var(--cream); background: rgba(0, 0, 0, .2); padding: 6px 8px; border-radius: 6px; margin: 6px 0; word-break: break-all; }
   .copy-pix-btn {
-    background: var(--blue-light);
-    color: var(--sky-soft);
+    background: var(--yellow);
+    color: var(--navy-deep);
     border: none;
     border-radius: 999px;
     padding: 6px 14px;
@@ -257,35 +302,35 @@
   /* PAINEL ANFITRIÃO */
   .host-toggle{
     position:fixed; top:10px; right:10px; z-index:40;
-    background:rgba(255,255,255,.85); color:var(--periwinkle);
-    border:1px solid rgba(74,109,145,.4); border-radius:999px;
+    background:rgba(18,25,52,.9); color:var(--periwinkle);
+    border:1px solid rgba(139,155,209,.4); border-radius:999px;
     font-size:.72rem; padding:7px 11px; cursor:pointer;
   }
   .host-panel{
-    background:var(--sky-soft); border-radius:14px; padding:16px;
-    margin-top:14px; border:1px solid rgba(74,109,145,.3); text-align:left; display:none;
+    background:var(--navy-mid); border-radius:14px; padding:16px;
+    margin-top:14px; border:1px solid rgba(139,155,209,.3); text-align:left; display:none;
   }
   .host-panel.show{ display:block; }
-  .host-panel h3{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:600; color:var(--blue-light); font-size:1.4rem; margin:0 0 4px; }
+  .host-panel h3{ font-family:'Pirata One', cursive; font-weight:400; color:var(--yellow); font-size:1.4rem; margin:0 0 4px; }
   .host-total{ font-size:.83rem; color:var(--cream); margin-bottom:10px; }
   .host-list li{
-    background:rgba(255,255,255,.6); border-radius:10px; padding:8px 10px; font-size:.83rem;
+    background:rgba(242,237,225,.06); border-radius:10px; padding:8px 10px; font-size:.83rem;
     display:flex; justify-content:space-between; align-items:center; gap:8px;
   }
   .host-list li .info{ flex:1; }
-  .host-list li .who{ font-weight:700; color:var(--blue-light); }
-  .host-list li .comps{ color:var(--periwinkle); font-size:.76rem; }
+  .host-list li .who{ font-weight:700; color:var(--yellow); }
+  .host-list li .comps{ color:#cfd6ec; font-size:.76rem; }
   .host-list li .delete-item-btn{
-    background:none; border:none; color:#d1546b; font-size:1.1rem;
+    background:none; border:none; color:#f18a8a; font-size:1.1rem;
     cursor:pointer; padding:2px 6px; border-radius:4px; opacity:.8; transition:opacity .2s;
   }
-  .host-list li .delete-item-btn:hover{ opacity:1; background:rgba(209,84,107,.15); }
+  .host-list li .delete-item-btn:hover{ opacity:1; background:rgba(241,138,138,.15); }
   .host-btn-group { display: flex; gap: 8px; margin-top: 10px; }
   .host-refresh, .host-clear{
-    flex: 1; background:none; border:1px solid rgba(74,109,145,.4);
+    flex: 1; background:none; border:1px solid rgba(139,155,209,.4);
     color:var(--periwinkle); border-radius:999px; padding:8px 10px; font-size:.78rem; cursor:pointer;
   }
-  .host-clear { border-color: rgba(209,84,107,.4); color: #d1546b; }
+  .host-clear { border-color: rgba(241,138,138,.4); color: #f18a8a; }
 
   @media (max-width: 340px){
     #app{ max-width: 92vw; }
@@ -302,10 +347,10 @@
     <div class="envelope-wrap" id="envelopeWrap" onclick="openEnvelope()">
       <div class="card">
         <div class="stitch-border"></div>
-        <svg class="deco-bfly b-a" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
-        <svg class="deco-bfly b-b" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
-        <svg class="deco-bfly b-c" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
-        <svg class="deco-bfly b-d" viewBox="0 0 32 24" fill="currentColor"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>
+        <svg class="deco-star star-a" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.9 8.2L23 11l-8.1 2.8L12 22l-2.9-8.2L1 11l8.1-2.8z"/></svg>
+        <svg class="deco-star star-b" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.9 8.2L23 11l-8.1 2.8L12 22l-2.9-8.2L1 11l8.1-2.8z"/></svg>
+        <svg class="deco-star star-c" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.9 8.2L23 11l-8.1 2.8L12 22l-2.9-8.2L1 11l8.1-2.8z"/></svg>
+        <svg class="deco-star star-d" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.9 8.2L23 11l-8.1 2.8L12 22l-2.9-8.2L1 11l8.1-2.8z"/></svg>
       </div>
 
       <div class="envelope-flap"></div>
@@ -313,7 +358,6 @@
     </div>
 
     <div class="tap-hint-outer" id="tapHintOuter">toque para abrir ✧</div>
-    <div class="secret-tag" style="display:block; text-align:center; margin:14px auto 0; width:fit-content;">SURPRESA</div>
   </div>
 
   <!-- SCREEN 2: CARTA -->
@@ -321,25 +365,24 @@
     <div class="card">
       <div class="stitch-border"></div>
       <button class="back-link" onclick="goToClosed()">‹ voltar ao envelope</button>
-      <div class="secret-tag" style="font-size:1.15rem; padding:7px 16px;">🤫 É surpresa!</div>
-      <div class="eyebrow">um almoço especial</div>
-      <h1 class="name">Vanessa</h1>
-      <div class="age-row"><span class="bfly">🦋</span><span>45 anos</span><span class="bfly">🦋</span></div>
+      <div class="eyebrow">um convite no universo de Coraline</div>
+      <h1 class="name">Catarina</h1>
+      <div class="age-row"><span class="star">✦</span><span>12 anos</span><span class="star">✦</span></div>
       <p class="invite-copy">
-        Você está convidado(a) para o nosso almoço surpresa dos 45 anos da Vanessa. Será um prazer ter sua presença!
-        <span class="meaning">🦋</span>
+        Existe uma porta pequena escondida em algum canto da casa — e do outro lado dela tem festa,
+        confete e muita mágica. Venha comemorar comigo e trazer sua melhor versão (a de botões nos olhos é opcional)! 🧵✨
       </p>
 
       <div class="when-where">
-        <div><strong>Quando:</strong> <span id="whenText">domingo, 4 de outubro · 12h</span></div>
-        <div><strong>Onde:</strong> <span id="whereText">Quadra 16, Casa 61, Setor Leste, Gama, DF</span></div>
+        <div><strong>Quando:</strong> <span id="whenText">sábado, 3 de outubro · 17h</span></div>
+        <div><strong>Onde:</strong> <span id="whereText">Avenida Buritis, Chácara 13, Condomínio Venturis Ventis, casa 22, Ponte Alta Norte, Gama, DF</span></div>
       </div>
 
       <div class="actions">
         <button class="action-btn rsvp" id="rsvpOpenBtn" onclick="openRsvp()">✅ Confirme a presença <span class="required-mark">(obrigatório)</span></button>
         <a class="action-btn maps" id="mapsBtn" href="#" target="_blank" rel="noopener">📍 Google Maps</a>
         <a class="action-btn uber" id="uberBtn" href="#" target="_blank" rel="noopener">🚗 Vai de Uber?</a>
-        <button class="action-btn gift" onclick="openGift()">🎁 Quer presentear?</button>
+        <button class="action-btn gift" onclick="openGift()">🎁 Sugestão de Presente</button>
       </div>
     </div>
 
@@ -358,7 +401,7 @@
 </div>
 
 <!-- BOTÃO FLUTUANTE DO ANFITRIÃO -->
-<button class="host-toggle" id="hostToggleBtn" style="display:none" onclick="toggleHostPanel()">📋 anfitrião(ã)</button>
+<button class="host-toggle" id="hostToggleBtn" style="display:none" onclick="toggleHostPanel()">📋 anfitriã</button>
 
 <!-- RSVP MODAL -->
 <div class="modal-overlay" id="rsvpOverlay">
@@ -382,8 +425,8 @@
     </div>
 
     <div id="rsvpThanks" class="thanks" style="display:none">
-      <div class="big">Presença confirmada! 🦋</div>
-      <p style="font-size:.85rem;margin:0 0 16px;">Já anotamos aqui!</p>
+      <div class="big">Presença confirmada! 🎉</div>
+      <p style="font-size:.85rem;color:#cfd6ec;margin:0 0 16px;">Já anotamos aqui. Até a festa!</p>
       <div class="modal-actions">
         <button class="submit" onclick="closeRsvp()">fechar</button>
       </div>
@@ -394,44 +437,129 @@
 <!-- GIFT MODAL -->
 <div class="modal-overlay" id="giftOverlay">
   <div class="modal">
-    <h2>Sugestão de presentes</h2>
-    <p class="sub">Sua presença é o mais importante, porém se quiser algumas sugestões para presenteá-la...</p>
+    <h2>Sugestões de Presente</h2>
+    <p class="sub">Sua presença é o maior presente! Se desejar nos presentear, deixamos algumas ideias abaixo:</p>
+
+    <div class="gift-box-info">
+      <strong>Preferências da Catarina:</strong>
+      <ul>
+        <li><strong>Roupas:</strong> Tam. 16 / P</li>
+        <li><strong>Calçados:</strong> Tam. 35</li>
+      </ul>
+    </div>
+
+    <!-- GALERIA COM LINKS (todos os 13 itens dentro de UMA única gift-gallery) -->
+    <div class="gift-gallery">
 
       <!-- ITEM 1 -->
       <div class="gift-card">
         <div class="gift-card-body">
-          <div class="gift-card-title">Vestuário</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Tamanho: 42/G </a>
+          <div class="gift-card-title">Boneco Jinx Arcade</div>
+          <a class="gift-card-link" href="https://shopee.com.br/Totem-M%C3%A9dio-Jinx-mirando-Arcane-14cm-Base-i.1027307120.18398041925?extraParams=%7B%22display_model_id%22%3A209170723393%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Link</a>
         </div>
       </div>
 
       <!-- ITEM 2 -->
       <div class="gift-card">
         <div class="gift-card-body">
-          <div class="gift-card-title">Calçados</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Tamanho: 37/38</a>
+          <div class="gift-card-title">Vestuário</div>
+          <a class="gift-card-link" href="https://br.shein.com/Tween-Girls-Casual-Knight-Embroidery-Polo-Collar-Short-Sleeve-T-Shirt-And-Pants-Set-Navy-Blue-Summer-School-Back-To-School-Preppy-Clothes-Outfit-p-383363134.htmlr" target="_blank" rel="noopener">Link</a>
         </div>
       </div>
 
       <!-- ITEM 3 -->
       <div class="gift-card">
         <div class="gift-card-body">
-          <div class="gift-card-title">Acessórios</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Cor: prata</a>
+          <div class="gift-card-title">Brinquedo</div>
+          <a class="gift-card-link" href="https://shopee.com.br/Hero-Academia-Figma-N%C2%BA.-443-Bakugou-Katsuki-N%C3%A3o.-323-Figura-de-A%C3%A7%C3%A3o-Midoriya-Izuku-Modelo-de-Brinquedo-MWUJ-YSPS-i.1607944821.43674873159?extraParams=%7B%22display_model_id%22%3A29949100858%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">Link</a>
         </div>
       </div>
 
       <!-- ITEM 4 -->
       <div class="gift-card">
         <div class="gift-card-body">
-          <div class="gift-card-title">Itens de beleza e cuidado pessoal</div>
-          <a class="gift-card-link" target="_blank" rel="noopener">Evitar fragrâncias muito doces</a>
+          <div class="gift-card-title">Chaveirinho</div>
+          <a class="gift-card-link" href="https://shopee.com.br/Chaveiro-Satoru-Gojo-Jujutsu-Kaisen-Anime-Impress%C3%A3o-3D-Cole%C3%A7%C3%A3o-Decora%C3%A7%C3%A3o-i.1160951261.23598836288" target="_blank" rel="noopener">Link</a>
         </div>
       </div>
 
+      <!-- ITEM 5 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Brinquedo</div>
+          <a class="gift-card-link" href="https://shopee.com.br/Olhar-Para-Cima-Jujutsu-Kaisen-Gojo-Satoru-Geto-Suguru-Figura-De-A%C3%A7%C3%A3o-Yuta-Okkotsu-Toji-Fushiguro-Inumaki-Bonecas-Modelo-Toge-Brinquedos-i.767635144.28801943332" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 6 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Kindle</div>
+          <a class="gift-card-link" href="https://www.amazon.com.br/dp/B0CP31L73X?ref_=MARS_NAVSTRIPE_desktop_kindle_kindle&th=1" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 7 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Artigos de pintura</div>
+          <a class="gift-card-link" href="https://www.amazon.com.br/MARK-pintura-conjunto-acr%C3%ADlica-pinc%C3%A9is/dp/B07XLNHQ78?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&smid=A2TBJRVZWF8C93&th=1" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 8 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Artigos de aquarela</div>
+          <a class="gift-card-link" href="https://www.mercadolivre.com.br/conjunto-aquarela-18-cores-pentel--pincel--gode--bloco/up/MLBU1734469350?pdp_filters=item_id%3AMLB1922157048&from=gshop&matt_tool=19966905&matt_word=&matt_source=google&matt_campaign_id=22090193669&matt_ad_group_id=174661940364&matt_match_type=&matt_network=g&matt_device=c&matt_creative=727914178069&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=295535644&matt_product_id=MLBU1734469350&matt_product_partition_id=2495706685574&matt_target_id=aud-2486398078456%3Apla-2495706685574&cq_src=google_ads&cq_cmp=22090193669&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gad_campaignid=22090193669&gbraid=0AAAAAD93qcC3j5bRg8d5NYqXrDUsvh7yz&gclid=CjwKCAjw2aPVBhBkEiwA0Cpttwtb3LM5airdRfLEQsdvdW4kHXumj6jGeOxgRJeaHgRLW95JGZ-xqxoCVIcQAvD_BwE" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 9 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Vestuário</div>
+          <a class="gift-card-link" href="https://br.shein.com/Tween-Girl-Casual-Modest-Minimalist-Short-Sleeve-Top-Shorts-2-Pieces-Set-Suitable-For-Summer-Primary-School-Middle-School-Back-To-School-White-Blue-p-521804765.html" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 10 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Vestuário</div>
+          <a class="gift-card-link" href="https://br.shein.com/SHEIN-Teen-Girls-Contrast-Color-Collar-Knit-Casual-Fitted-Crop-Top-With-Small-Logo-Embroidery-Navy-Blue-White-Polo-Shirt-For-Girls-Preppy-Clothes-p-428859691.html" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 11 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Vestuário</div>
+          <a class="gift-card-link" href="https://br.shein.com/SHEIN-Teen-Girls-White-Navy-Blue-Splicing-Ribbed-Knit-Short-Sleeve-Round-Neck-Star-Applique-Casual-T-Shirt-Vintage-Chic-Streetwear-Spring-Summer-p-53793047.html" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 12 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">Câmera Polaroid</div>
+          <a class="gift-card-link" href="https://www.mercadolivre.com.br/camera-digital-polaroid-instantanea-infantil-imprime-na-hora/up/MLBU4494424433?pdp_filters=item_id%3AMLB4970317975&from=gshop&matt_tool=31485049&matt_word=&matt_source=google&matt_campaign_id=22090354244&matt_ad_group_id=191786788721&matt_match_type=&matt_network=g&matt_device=c&matt_creative=782869963571&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=5505543268&matt_product_id=MLBU4494424433&matt_product_partition_id=2497313969263&matt_target_id=aud-2486398078456:pla-2497313969263&cq_src=google_ads&cq_cmp=22090354244&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gad_campaignid=22090354244&gbraid=0AAAAAD93qcAmhNlQdeefKH61VneE6ljKQ&gclid=CjwKCAjw2aPVBhBkEiwA0Cptt--ietsGd1DT726M7ZnPTa0tnG4aVo37Y0pAS8qGP0A5mvh37VwtrBoCWtEQAvD_BwE" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+      <!-- ITEM 13 -->
+      <div class="gift-card">
+        <div class="gift-card-body">
+          <div class="gift-card-title">SkinCare</div>
+          <a class="gift-card-link" href="https://www.mercadolivre.com.br/kit-antioleosidade-creamy-limpador-protetor-hidratante/p/MLB2093453750?pdp_filters=item_id%3AMLB7573136258&from=gshop&matt_tool=71447492&matt_word=&matt_source=google&matt_campaign_id=22090193645&matt_ad_group_id=194474607034&matt_match_type=&matt_network=g&matt_device=c&matt_creative=792355614894&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=735098660&matt_product_id=MLB2093453750-product&matt_product_partition_id=2497851236828&matt_target_id=aud-2486398078456:pla-2497851236828&cq_src=google_ads&cq_cmp=22090193645&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gad_campaignid=22090193645&gbraid=0AAAAAD93qcABYz0w_HFhwSiw9duhB8ZF9&gclid=CjwKCAjw2aPVBhBkEiwA0Cptt1kQHRjIZfftaealPmPrdUh2PQsnKGsqxS6KGAoC9qJ3s1rBWBt7eBoC2nEQAvD_BwE" target="_blank" rel="noopener">Link</a>
+        </div>
+      </div>
+
+    </div>
+
     <div class="pix-card">
-      <div class="pix-title">Chave PIX 🔑</div>
-      <div class="pix-key" id="pixKeyText">718.195.761-91</div>
+      <div class="pix-title">Prefere presentear em PIX? 🔑</div>
+      <div class="pix-key" id="pixKeyText">waldery@gmail.com</div>
       <button class="copy-pix-btn" id="copyPixBtn" onclick="copyPix()">copiar chave PIX</button>
     </div>
 
@@ -443,24 +571,21 @@
 
 <!-- SDK DO FIREBASE -->
 <script type="module">
- 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
- 
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, get, remove, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
   const firebaseConfig = {
-    apiKey: "AIzaSyAf8y-ERKqYuajkR35H5iD1vaLQuGVlC9Y",
-    authDomain: "convite-vanessa.firebaseapp.com",
-    databaseURL: "https://convite-vanessa-default-rtdb.firebaseio.com",
-    projectId: "convite-vanessa",
-    storageBucket: "convite-vanessa.firebasestorage.app",
-    messagingSenderId: "1099073743178",
-    appId: "1:1099073743178:web:e48e5bc4b84245a4b7b9b3",
-    measurementId: "G-9P9EQTBMS4"
+    apiKey: "AIzaSyDXGY9mj_Bbk3laXh80trJiAG2AfinEr4k",
+    authDomain: "convite-catarina.firebaseapp.com",
+    databaseURL: "https://convite-catarina-default-rtdb.firebaseio.com",
+    projectId: "convite-catarina",
+    storageBucket: "convite-catarina.firebasestorage.app",
+    messagingSenderId: "673530294395",
+    appId: "1:673530294395:web:c9e65798d7615330e232de"
   };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
+  const db = getDatabase(app);
 
   window.storage = {
     async set(key, value) {
@@ -505,7 +630,7 @@
     },
     async clearAllRSVP() {
       try {
-        const listResult = await this.list('rsvp_vanessa_');
+        const listResult = await this.list('rsvp_');
         const keys = listResult.keys || [];
         for (const k of keys) {
           await remove(ref(db, k));
@@ -526,12 +651,12 @@
 
 <script>
 const CONFIG = {
-  guestOfHonor: "Vanessa",
-  age: 45,
-  whenText: "domingo, 4 de outubro · 12h",
-  address: "Quadra 16, casa 61, setor leste, Gama, DF",
-  lat: "-16.0177",
-  lng: "-48.0485"
+  guestOfHonor: "Catarina",
+  age: 12,
+  whenText: "sábado, 3 de outubro · 17h",
+  address: "Avenida Buritis, Chácara 13, Condomínio Venturis Ventis, casa 22, Ponte Alta Norte, Gama, DF",
+  lat: "-15.9868",
+  lng: "-48.0625"
 };
 
 document.getElementById('whenText').textContent = CONFIG.whenText;
@@ -639,7 +764,7 @@ async function submitRsvp(){
     total: 1 + companions.length,
     timestamp: new Date().toISOString()
   };
-  const key = 'rsvp_vanessa_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+  const key = 'rsvp_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 
   try {
     const result = await window.storage.set(key, entry);
@@ -675,7 +800,7 @@ async function loadHostList(){
   listEl.innerHTML = '';
   totalEl.textContent = 'carregando…';
   try{
-    const listResult = await window.storage.list('rsvp_vanessa_');
+    const listResult = await window.storage.list('rsvp_');
     const keys = (listResult && listResult.keys) ? listResult.keys : [];
 
     if(keys.length === 0){
@@ -724,37 +849,24 @@ async function deleteGuest(key, name){
     alert("Erro ao remover o convidado.");
   }
 }
-
-async function clearHostList(){
-  if(!confirm('Tem certeza que quer apagar TODAS as confirmações? Essa ação não pode ser desfeita.')) return;
-  try {
-    const ok = await window.storage.clearAllRSVP();
-    if(ok){ loadHostList(); }
-    else { alert('Não foi possível limpar a lista.'); }
-  } catch(err){
-    console.error('Erro ao limpar lista:', err);
-    alert('Erro ao limpar a lista.');
-  }
-}
-
 function escapeHtml(str){
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
 }
 
-(function addButterflies(){
+(function addStars(){
   const positions = [
-    {t:'6%', l:'10%', s:16, d:0}, {t:'14%', l:'82%', s:12, d:.6},
-    {t:'40%', l:'4%', s:10, d:1.2}, {t:'62%', l:'90%', s:13, d:.3},
-    {t:'85%', l:'15%', s:11, d:.9}, {t:'92%', l:'70%', s:13, d:1.5}
+    {t:'6%', l:'10%', s:12, d:0}, {t:'14%', l:'82%', s:9, d:.6},
+    {t:'40%', l:'4%', s:7, d:1.2}, {t:'62%', l:'90%', s:10, d:.3},
+    {t:'85%', l:'15%', s:8, d:.9}, {t:'92%', l:'70%', s:10, d:1.5}
   ];
   positions.forEach(p => {
     const s = document.createElement('div');
-    s.className = 'sky-butterfly';
+    s.className = 'sky-star';
     s.style.top = p.t; s.style.left = p.l;
     s.style.animationDelay = p.d + 's';
-    s.innerHTML = '<svg width="'+p.s+'" height="'+(p.s*0.75)+'" viewBox="0 0 32 24" fill="#7fa9d1"><path d="M16 6c-2-5-9-7-11-3-2 4 2 8 7 7-5 1-8 6-5 9 3 3 8 0 9-6 1 6 6 9 9 6 3-3 0-8-5-9 5 1 9-3 7-7-2-4-9-2-11 3z"/></svg>';
+    s.innerHTML = '<svg width="'+p.s+'" height="'+p.s+'" viewBox="0 0 24 24" fill="#ffd447"><path d="M12 0l2.9 8.2L23 11l-8.1 2.8L12 22l-2.9-8.2L1 11l8.1-2.8z"/></svg>';
     document.body.appendChild(s);
   });
 })();
